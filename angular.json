@@ -1,0 +1,281 @@
+{
+  "version": 1,
+  "projects": {
+    "web-admin": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/web-admin",
+      "sourceRoot": "apps/web-admin/src",
+      "prefix": "nx-home-assistant",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/web-admin",
+            "index": "apps/web-admin/src/index.html",
+            "main": "apps/web-admin/src/main.ts",
+            "polyfills": "apps/web-admin/src/polyfills.ts",
+            "tsConfig": "apps/web-admin/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/web-admin/src/favicon.ico",
+              "apps/web-admin/src/assets"
+            ],
+            "styles": ["apps/web-admin/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/web-admin/src/environments/environment.ts",
+                  "with": "apps/web-admin/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "web-admin:build",
+            "proxyConfig": "apps/web-admin/proxy.conf.json"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "web-admin:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "web-admin:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/web-admin/tsconfig.app.json",
+              "apps/web-admin/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/web-admin/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/web-admin/jest.config.js",
+            "tsConfig": "apps/web-admin/tsconfig.spec.json",
+            "setupFile": "apps/web-admin/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "google-local": {
+      "root": "apps/google-local",
+      "sourceRoot": "apps/google-local/src",
+      "projectType": "application",
+      "prefix": "google-local",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/google-local",
+            "main": "apps/google-local/src/main.ts",
+            "tsConfig": "apps/google-local/tsconfig.app.json",
+            "assets": ["apps/google-local/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/google-local/src/environments/environment.ts",
+                  "with": "apps/google-local/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "google-local:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/google-local/tsconfig.app.json",
+              "apps/google-local/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/google-local/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/google-local/jest.config.js",
+            "tsConfig": "apps/google-local/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "functions": {
+      "root": "apps/functions",
+      "sourceRoot": "apps/functions/src",
+      "projectType": "application",
+      "prefix": "functions",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/functions",
+            "main": "apps/functions/src/main.ts",
+            "tsConfig": "apps/functions/tsconfig.app.json",
+            "assets": ["apps/functions/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/functions/src/environments/environment.ts",
+                  "with": "apps/functions/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "functions:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/functions/tsconfig.app.json",
+              "apps/functions/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/functions/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/functions/jest.config.js",
+            "tsConfig": "apps/functions/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "google-agent": {
+      "root": "apps/google-agent",
+      "sourceRoot": "apps/google-agent/src",
+      "projectType": "application",
+      "prefix": "google-agent",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/google-agent",
+            "main": "apps/google-agent/src/main.ts",
+            "tsConfig": "apps/google-agent/tsconfig.app.json",
+            "assets": [
+              "apps/google-agent/src/assets",
+              "apps/google-agent/src/index.html"
+            ],
+            "externalDependencies": "none"
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/google-agent/src/environments/environment.ts",
+                  "with": "apps/google-agent/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "google-agent:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/google-agent/tsconfig.app.json",
+              "apps/google-agent/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/google-agent/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/google-agent/jest.config.js",
+            "tsConfig": "apps/google-agent/tsconfig.spec.json"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "web-admin"
+}

@@ -1,0 +1,7 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [true, "attribute", "nxHomeAssistant", "camelCase"],
+    "component-selector": [true, "element", "nx-home-assistant", "kebab-case"]
+  }
+}

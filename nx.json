@@ -1,0 +1,24 @@
+{
+  "npmScope": "nx-home-assistant",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "web-admin": {
+      "tags": []
+    },
+    "google-local": {
+      "tags": []
+    },
+    "functions": {
+      "tags": []
+    },
+    "google-agent": {
+      "tags": []
+    }
+  }
+}

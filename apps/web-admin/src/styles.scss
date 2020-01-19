@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+
+// @mixin google-font($family) {
+//   @import url('http://fonts.googleapis.com/css?family=#{$family}');
+// }
+
+// @include google-font('Material+Icons');
+
+// @import '~materialize-css/sass/materialize.scss'
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}

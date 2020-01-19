@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { createEffect, Actions, ofType } from '@ngrx/effects';
+import { createEffect } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/angular';
-
-import * as fromDevices from './devices.reducer';
 import * as DevicesActions from './devices.actions';
+import * as fromDevices from './devices.reducer';
 
 @Injectable()
 export class DevicesEffects {
@@ -28,7 +27,6 @@ export class DevicesEffects {
   );
 
   constructor(
-    private actions$: Actions,
     private dataPersistence: DataPersistence<fromDevices.DevicesPartialState>
   ) {}
 }

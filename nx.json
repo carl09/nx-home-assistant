@@ -19,6 +19,9 @@
     },
     "google-agent": {
       "tags": []
+    },
+    "common": {
+      "tags": []
     }
   }
 }

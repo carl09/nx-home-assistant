@@ -1,13 +1,14 @@
 import { LayoutModule } from '@angular/cdk/layout';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,25 +18,22 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NxModule } from '@nrwl/angular';
 import { environment } from '../environments/environment';
-import { DevicesEffects } from './+state/devices/devices.effects';
-import { IRootState, reducers } from './+state/store';
-import { AppRoutingModule } from './app-routing.module';
+import { IRootState, reducers, effects } from './+state/store';
 import { AppComponent } from './app.component';
 import { HomeAssistantComponent } from './home-assistant/home-assistant.component';
-import { LoginComponent } from './login/login.component';
+import { JsonViewerComponent } from './json-viewer/json-viewer.component';
+import { ManagedEditComponent } from './managed/managed-edit/managed-edit.component';
+import { ManagedViewComponent } from './managed/managed-view/managed-view.component';
 import { ManagedComponent } from './managed/managed.component';
-import { NavigationComponent } from './navigation/navigation.component';
-import { ProfileComponent } from './profile/profile.component';
-import { HomeAssistantService } from './services/home-assistant.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent,
     HomeAssistantComponent,
     ManagedComponent,
-    LoginComponent,
-    ProfileComponent
+    ManagedViewComponent,
+    JsonViewerComponent,
+    ManagedEditComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +45,8 @@ import { HomeAssistantService } from './services/home-assistant.service';
         strictStateImmutability: true
       }
     }),
-    EffectsModule.forRoot([DevicesEffects]),
+    HttpClientModule,
+    EffectsModule.forRoot(effects),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     BrowserAnimationsModule,
     LayoutModule,
@@ -56,18 +55,13 @@ import { HomeAssistantService } from './services/home-assistant.service';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-    AngularFireAuthModule,
-    AngularFireAuthGuardModule
+    MatCardModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-  constructor(homeAssistantService: HomeAssistantService) {
-    homeAssistantService.init();
-  }
-}
+export class AppModule {}

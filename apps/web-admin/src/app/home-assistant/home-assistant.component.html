@@ -14,6 +14,7 @@
     role="listitem"
     [ngClass]="{ active: item.entity_id == selectedId }"
     (click)="onClickDevice(item)"
-    >{{ item.entity_id }} : {{ item.attributes.friendly_name }}</mat-list-item
+    dense
+    >{{ item.entity_id }} : {{ item.title }}</mat-list-item
   >
 </mat-list>

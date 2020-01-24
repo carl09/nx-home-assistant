@@ -16,3 +16,11 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}

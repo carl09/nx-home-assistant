@@ -22,6 +22,9 @@
     },
     "common": {
       "tags": []
+    },
+    "data-access": {
+      "tags": []
     }
   }
 }

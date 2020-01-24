@@ -1,25 +1,53 @@
-import * as bodyParser from 'body-parser';
 import * as express_ from 'express';
-import * as fs from 'fs';
-import { execute } from './app/device/device.execute';
-import { IUDPOptions, startUDPServer } from './app/discover';
+import * as http from 'http';
+import { environment } from './environments/environment';
 
-const optionsFile = { devices: [] }; // require("/data/options.json");
+import { namedLog } from './utils/logging';
+const log = namedLog('Main');
 
-console.log('devices', optionsFile.devices);
+log.debug('Environment', environment);
+
+const options = environment.production
+  ? readFileAsJson('/data/options.json')
+  : environment.options;
+
+log.debug('App options', options);
+
+const jwt = readFileAsJson(options.googleJwtPath);
+
+import * as admin from 'firebase-admin';
+admin.initializeApp({
+  credential: admin.credential.cert(jwt as admin.ServiceAccount),
+  databaseURL: options.firebase.databaseURL
+});
+
+import { DataAccess } from './app/data-access';
+import { IUDPOptions, startUDPServer } from './app/discover-server';
+import { createRestServer } from './app/rest-server';
+import { createWebSocket } from './app/socket-server';
+import { smarthome, SmartHomeJwt } from 'actions-on-google';
+import { readFileAsJson } from './utils/file';
 
 const express = express_;
 
-const app = express();
+const smarthomeApp = smarthome({
+  debug: !environment.production,
+  key: options.firebase.apikey,
+  jwt: jwt as SmartHomeJwt
+});
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(bodyParser.raw());
+const app = express();
 
 const port = 8088;
 
 const env = process.env;
-const token = env.HASSIO_TOKEN as string;
+const token: string = env.HASSIO_TOKEN || environment.homeAssistaneApiKey;
+
+log.debug('Token', token);
+
+const supervisorToken = env.SUPERVISOR_TOKEN;
+
+log.debug('SupervisorToken', supervisorToken);
 
 const argv: IUDPOptions = {
   udp_discovery_port: 3311,
@@ -30,62 +58,16 @@ const argv: IUDPOptions = {
   firmware_revision: ''
 };
 
-app.get('/', (_req, res) => {
-  console.log('request', res);
-  res.send('Hello World! again');
-});
+const dataAccess: DataAccess = new DataAccess(token, smarthomeApp);
 
-app.get('/api/fs', (_req, res) => {
-  if (!fs.existsSync('/config/google_local.json')) {
-    fs.writeFileSync('/config/google_local.json', '');
-  }
+createRestServer(app, dataAccess, token, supervisorToken);
 
-  res.json();
-});
+const server = http.createServer(app);
 
-app.get('/api/devices', (_req, res) => {
-  // console.log("list devices", optionsFile.devices);
-  res.json({
-    devices: optionsFile.devices || []
-  });
-});
+createWebSocket(server, dataAccess);
 
-app.post('/api/execute/:id', async (req, res) => {
-  const id = req.params.id;
+server.listen(port);
 
-  const body: {
-    devices: any;
-    execution: Array<{
-      command: string;
-      params: { [key: string]: any };
-    }>;
-  } = req.body;
-
-  const result = await execute(
-    body.execution[0].command,
-    token,
-    id,
-    body.execution[0].params
-  );
-
-  res.status(200).json(result);
-});
-
-app.use((_req, res, _next) => {
-  console.log('request 404', res);
-  res.status(404).send("Sorry can't find that!");
-});
-
-console.log(
-  'all',
-  Object.keys(env).reduce((acc, k) => {
-    if (!k.startsWith('npm')) {
-      acc[k] = env[k];
-    }
-    return acc;
-  }, {})
-);
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-startUDPServer(argv);
+if (environment.production) {
+  startUDPServer(argv);
+}

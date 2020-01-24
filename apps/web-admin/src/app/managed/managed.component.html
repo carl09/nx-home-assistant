@@ -1,1 +1,27 @@
-<p>managed works!</p>
+<button mat-button color="primary" (click)="addNew()">Add New</button>
+
+<div class="row">
+  <div class="column">
+    <h3>
+      Devices
+    </h3>
+    <mat-list *ngIf="devices$ | async; let devices; else: loading">
+      <mat-list-item *ngFor="let item of devices">
+        {{ item.name }}
+        <button mat-icon-button (click)="onEdit(item)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="onView(item)">
+          <mat-icon>info</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+    <ng-template #loading>Loading&hellip;</ng-template>
+  </div>
+  <div class="column">
+
+    <nx-home-assistant-managed-view *ngIf="viewId" [id]="viewId"></nx-home-assistant-managed-view>
+    <nx-home-assistant-managed-edit *ngIf="editId" [id]="editId" (cancel)="onCancel()"></nx-home-assistant-managed-edit>
+    <!-- <router-outlet></router-outlet> -->
+  </div>
+</div>

@@ -1,3 +1,4 @@
+import { asyncForEach } from '@nx-home-assistant/common';
 import {
   SmartHomeV1ExecutePayload,
   SmartHomeV1ExecuteRequest,
@@ -7,7 +8,6 @@ import {
 import { ApiClientObjectMap } from 'actions-on-google/dist/common';
 import { IUserModel } from './common/user.model';
 import { queryFirebase } from './homeassistant-query';
-import { asyncForEach } from './utils/constant';
 import { callService, getDeviceStatus } from './utils/queries';
 
 interface IParms {
@@ -40,12 +40,15 @@ commandMap['action.devices.commands.GetCameraStream'] = (
     [key: string]: any;
   }
 ): Promise<SmartHomeV1ExecuteResponseCommands> => {
-  return Promise.resolve(
-    createCommand(deviceId, {
-      cameraStreamAccessUrl:
-        'https://carlishome.duckdns.org:7883/api/camera_proxy_stream/camera.upstairscamera?token=79b6ce2cdf54949d0e91a8a2dffce17b0f142563b5015c565af44d518177fb29'
-    })
-  );
+  const xxx = createCommand(deviceId, {
+    // cameraStreamAccessUrl:
+    //   'http://192.168.10.80:8080/stream/e34a63e9-f109-48e0-a352-b679a403a553/index.m3u8'
+    cameraStreamAccessUrl: 'http://192.168.10.80:8090/help.m3u8'
+  });
+
+  console.warn('Showing Camera GetCameraStream', xxx);
+
+  return Promise.resolve(xxx);
 };
 
 commandMap['action.devices.commands.OnOff'] = async (
@@ -65,25 +68,21 @@ commandMap['action.devices.commands.OnOff'] = async (
     await callService(user, 'climate', on ? 'turn_on' : 'turn_off', {
       entity_id: device.entityId
     });
+    if (on) {
+      await callService(user, 'climate', 'set_hvac_mode', {
+        entity_id: device.entityId,
+        hvac_mode: state.thermostatMode
+      });
+    }
   } else {
     await callService(user, 'switch', on ? 'turn_on' : 'turn_off', {
       entity_id: device.entityId
     });
   }
 
-  // await callService(user, 'climate', on ? 'turn_on' : 'turn_off', {
-  //   entity_id: device.entityId
-  // });
-
-  // await setDeviceStatusProp(deviceId, 'on', on);
-
   state.on = on;
 
-  const result = createCommand(deviceId, state);
-
-  console.log('action.devices.commands.OnOff on', state);
-
-  return result;
+  return createCommand(deviceId, state);
 };
 
 commandMap['action.devices.commands.ThermostatSetMode'] = async (
@@ -97,26 +96,16 @@ commandMap['action.devices.commands.ThermostatSetMode'] = async (
 
   const state = await getDeviceStatus(deviceId);
 
-  const thermostatMode =
-    parms.thermostatMode === 'on' ? 'heat' : parms.thermostatMode;
+  const thermostatMode = parms.thermostatMode;
 
   await callService(user, 'climate', 'set_hvac_mode', {
     entity_id: device.entityId,
     hvac_mode: thermostatMode
   });
 
-  // await setDeviceStatusProp(deviceId, 'thermostatMode', thermostatMode);
-
   state.thermostatMode = thermostatMode;
 
-  const result = createCommand(deviceId, state);
-
-  console.log(
-    'action.devices.commands.ThermostatTemperatureSetpoint set_hvac_mode',
-    state
-  );
-
-  return result;
+  return createCommand(deviceId, state);
 };
 
 commandMap['action.devices.commands.ThermostatTemperatureSetpoint'] = async (
@@ -138,22 +127,9 @@ commandMap['action.devices.commands.ThermostatTemperatureSetpoint'] = async (
     hvac_mode: state.thermostatMode
   });
 
-  // await setDeviceStatusProp(
-  //   deviceId,
-  //   'thermostatTemperatureSetpoint',
-  //   thermostatTemperatureSetpoint
-  // );
-
   state.thermostatTemperatureSetpoint = thermostatTemperatureSetpoint;
 
-  const result = createCommand(deviceId, state);
-
-  console.log(
-    'action.devices.commands.ThermostatTemperatureSetpoint set_hvac_mode',
-    state
-  );
-
-  return result;
+  return createCommand(deviceId, state);
 };
 
 export const execute = async (
@@ -167,11 +143,11 @@ export const execute = async (
     commands: []
   };
 
-  const items: Array<{
+  const items: {
     deviceId: string;
     execCommand: string;
     params: ApiClientObjectMap<any>;
-  }> = [];
+  }[] = [];
 
   for (const input of body.inputs) {
     for (const command of input.payload.commands) {
@@ -181,17 +157,13 @@ export const execute = async (
           const execCommand = execution.command;
           const params = execution.params;
 
+          console.log('[onExecute]', execCommand, deviceId, params);
+
           items.push({
             deviceId,
             execCommand,
             params
           });
-
-          // if (execCommand in commandMap) {
-          //   payload.commands.push(commandMap[execCommand](user, deviceId, params));
-          // } else {
-          //   console.error('Unkndow Command', execCommand, params);
-          // }
         }
       }
     }

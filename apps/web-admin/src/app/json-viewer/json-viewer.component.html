@@ -1,0 +1,42 @@
+<section class="nx-home-assistant-json-viewer">
+  <section
+    *ngFor="let segment of segments"
+    [ngClass]="['segment', 'segment-type-' + segment.type]"
+  >
+    <section
+      (click)="toggle(segment)"
+      [ngClass]="{
+        'segment-main': true,
+        expandable: segment.type === 'object' || segment.type === 'array',
+        expanded: segment.expanded
+      }"
+    >
+      <div
+        *ngIf="segment.type === 'object' || segment.type === 'array'"
+        class="toggler"
+      ></div>
+      <span class="segment-key">{{ segment.key }}</span>
+      <span class="segment-separator">: </span>
+      <span
+        *ngIf="
+          !segment.expanded ||
+          !(segment.type === 'object' || segment.type === 'array')
+        "
+        class="segment-value"
+        >{{ segment.description }}</span
+      >
+    </section>
+    <section
+      *ngIf="
+        segment.expanded &&
+        (segment.type === 'object' || segment.type === 'array')
+      "
+      class="children"
+    >
+      <nx-home-assistant-json-viewer
+        [json]="segment.value"
+        [expanded]="expanded"
+      ></nx-home-assistant-json-viewer>
+    </section>
+  </section>
+</section>

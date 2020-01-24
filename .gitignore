@@ -40,3 +40,7 @@ Thumbs.db
 
 #Do not commit enviroment files
 /**/environments/*.ts
+
+/**/*.js.map
+
+/**/assets/*.json

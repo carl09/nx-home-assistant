@@ -16,7 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@nx-home-assistant/common": ["libs/common/src/index.ts"]
+      "@nx-home-assistant/common": ["libs/common/src/index.ts"],
+      "@nx-home-assistant/data-access": ["libs/data-access/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -3,6 +3,7 @@ import * as functions from 'firebase-functions';
 const admin = require('firebase-admin');
 admin.initializeApp();
 
+import { IManagedFirebaseModel, asyncForEach, IHomeAssistantEntityStatus } from '@nx-home-assistant/common';
 import {
   smarthome,
   SmartHomeV1ExecuteRequest,
@@ -13,18 +14,11 @@ import {
 } from 'actions-on-google';
 import * as shortid from 'shortid';
 import { fakeauth, faketoken } from './app/auth';
-import { getTransforms } from './app/common/device.fn';
-import { IHomeAssistantEntity } from './app/common/device.model';
-import { DeviceStatus } from './app/device.model';
 import { execute } from './app/homeassistant-execute';
 import { queryDevice } from './app/homeassistant-query';
 import { syncDevices } from './app/homeassistant-sync';
-import { asyncForEach, globalAgentUserId } from './app/utils/constant';
-import {
-  findDeviceStatusByEntityId,
-  getCurrentUser,
-  setDeviceStatus
-} from './app/utils/queries';
+import { globalAgentUserId } from './app/utils/constant';
+import { getCurrentUser } from './app/utils/queries';
 import { environment } from './environments/environment';
 
 export { faketoken, fakeauth };
@@ -105,43 +99,21 @@ export const requestsync = functions.https.onRequest(async (req, res) => {
 });
 
 export const syncDevice = functions.https.onRequest(
-  async (request, response) => {
-    const entity: IHomeAssistantEntity = request.body;
+  async (request, _response) => {
+    const entity: IHomeAssistantEntityStatus = request.body;
 
-    console.info(`[Sync Device] entity`, entity);
+    console.info(`[Sync Device] entity`, entity.entity_id);
 
-    const device = await findDeviceStatusByEntityId(entity.entity_id);
+//     const device = await findDeviceStatusByEntityId(entity.entity_id);
 
-    console.info(`[Sync Device] device`, device);
+//     const deviceStatus = createQueryDevice(device, entity);
 
-    // getEntity(user, device.entityId).then(entity =>{
+//     // // tslint:disable-next-line: no-floating-promises
+//     await setDeviceStatus(device.id, deviceStatus);
 
-    const d: DeviceStatus = {
-      online: true
-    };
+//     response.json(deviceStatus);
 
-    const trans = getTransforms(device.model.traits);
-
-    const deviceStatus = trans.reduce((acc, t) => {
-      const result = t.query(device.model, entity);
-
-      Object.keys(result).map(x => {
-        if (result[x] !== undefined) {
-          acc[x] = result[x];
-        }
-      });
-
-      return acc;
-    }, d);
-
-    // // tslint:disable-next-line: no-floating-promises
-    await setDeviceStatus(device.id, deviceStatus);
-
-    console.info(`[Sync Device] update`, deviceStatus);
-
-    response.json(deviceStatus);
-
-    return true;
+//     return true;
   }
 );
 
@@ -150,11 +122,13 @@ export const reportstate = functions.firestore
   .onWrite(async (change, context) => {
     console.log('[reportstate]');
 
-    const snapshot = change.after.data();
+    const snapshot = change.after.data() as IManagedFirebaseModel;
+
+    // const status: IManagedFirebaseModel = snapshot;
 
     const deviceId: string = context.params.deviceId;
 
-    console.info('SnapShot', deviceId, snapshot);
+    console.info('[reportstate] SnapShot', deviceId, snapshot.name);
 
     const requestBody: SmartHomeV1ReportStateRequest = {
       requestId: shortid.generate(),

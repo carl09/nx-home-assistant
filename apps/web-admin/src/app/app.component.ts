@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { environment } from '../environments/environment';
+import { ManagedDevicesService } from './services/managed-devices.service';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'nx-home-assistant-root',
@@ -6,6 +8,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
-  title = 'web-admin';
+export class AppComponent implements OnInit {
+  constructor(private managedDevicesService: ManagedDevicesService) {}
+
+  ngOnInit(): void {
+    this.managedDevicesService.init(environment.devicesRestUri);
+  }
 }

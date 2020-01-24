@@ -1,9 +1,12 @@
+import { setDeviceStatus } from '@nx-home-assistant/data-access';
+import {
+  DeviceStatus,
+  getTransforms,
+  IManagedDeviceModel
+} from '@nx-home-assistant/common';
 import * as admin from 'firebase-admin';
-import { getTransforms } from './common/device.fn';
-import { IDeviceModel } from './common/device.model';
 import { IUserModel } from './common/user.model';
-import { DeviceStatus } from './device.model';
-import { getDeviceStatus, getEntity, setDeviceStatus } from './utils/queries';
+import { getDeviceStatus, getEntity } from './utils/queries';
 
 export const queryDevice = async (
   user: IUserModel,
@@ -18,6 +21,8 @@ export const queryDevice = async (
     const d: DeviceStatus = {
       online: true
     };
+
+    console.log('[queryDevice] device', device.name);
 
     const entity = await getEntity(user, device.entityId);
 
@@ -45,7 +50,9 @@ export const queryDevice = async (
   return storedDeviceStatus;
 };
 
-export const queryFirebase = (deviceId: string): Promise<IDeviceModel> => {
+export const queryFirebase = (
+  deviceId: string
+): Promise<IManagedDeviceModel> => {
   admin.auth();
 
   const db = admin.firestore();
@@ -56,7 +63,7 @@ export const queryFirebase = (deviceId: string): Promise<IDeviceModel> => {
     docRef
       .get()
       .then(snapshot => {
-        const doc = snapshot.data() as IDeviceModel;
+        const doc = snapshot.data() as IManagedDeviceModel;
         console.log('[queryFirebase] doc', doc);
 
         resolve(doc);

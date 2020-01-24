@@ -15,12 +15,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/web-admin",
+            "outputPath": "local_google/www/apps/web-admin",
             "index": "apps/web-admin/src/index.html",
             "main": "apps/web-admin/src/main.ts",
             "polyfills": "apps/web-admin/src/polyfills.ts",
             "tsConfig": "apps/web-admin/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/web-admin/src/favicon.ico",
               "apps/web-admin/src/assets"
@@ -44,7 +44,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -88,7 +87,10 @@
               "apps/web-admin/tsconfig.app.json",
               "apps/web-admin/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/web-admin/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/web-admin/**"
+            ]
           }
         },
         "test": {
@@ -96,7 +98,8 @@
           "options": {
             "jestConfig": "apps/web-admin/jest.config.js",
             "tsConfig": "apps/web-admin/tsconfig.spec.json",
-            "setupFile": "apps/web-admin/src/test-setup.ts"
+            "setupFile": "apps/web-admin/src/test-setup.ts",
+            "passWithNoTests": true
           }
         }
       }
@@ -114,10 +117,17 @@
             "outputPath": "dist/apps/google-local",
             "main": "apps/google-local/src/main.ts",
             "tsConfig": "apps/google-local/tsconfig.app.json",
-            "assets": ["apps/google-local/src/assets"]
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "apps/google-local/src/assets/",
+                "output": "./assets/"
+              }
+            ]
           },
           "configurations": {
             "production": {
+              "outputPath": "local_google/www/apps/google-local",
               "optimization": true,
               "extractLicenses": true,
               "inspect": false,
@@ -126,14 +136,16 @@
                   "replace": "apps/google-local/src/environments/environment.ts",
                   "with": "apps/google-local/src/environments/environment.prod.ts"
                 }
-              ]
+              ],
+              "assets": []
             }
           }
         },
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "google-local:build"
+            "buildTarget": "google-local:build",
+            "inspect": true
           }
         },
         "lint": {
@@ -143,14 +155,18 @@
               "apps/google-local/tsconfig.app.json",
               "apps/google-local/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/google-local/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/google-local/**"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/google-local/jest.config.js",
-            "tsConfig": "apps/google-local/tsconfig.spec.json"
+            "tsConfig": "apps/google-local/tsconfig.spec.json",
+            "passWithNoTests": true
           }
         }
       }
@@ -168,7 +184,9 @@
             "outputPath": "dist/apps/functions",
             "main": "apps/functions/src/main.ts",
             "tsConfig": "apps/functions/tsconfig.app.json",
-            "assets": ["apps/functions/src/assets"]
+            "assets": [
+              "apps/functions/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -187,7 +205,7 @@
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "functions:build"
+            "buildTarget": "functions:build",
           }
         },
         "lint": {
@@ -197,14 +215,18 @@
               "apps/functions/tsconfig.app.json",
               "apps/functions/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/functions/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/functions/**"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/functions/jest.config.js",
-            "tsConfig": "apps/functions/tsconfig.spec.json"
+            "tsConfig": "apps/functions/tsconfig.spec.json",
+            "passWithNoTests": true
           }
         }
       }
@@ -255,14 +277,18 @@
               "apps/google-agent/tsconfig.app.json",
               "apps/google-agent/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/google-agent/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/google-agent/**"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/google-agent/jest.config.js",
-            "tsConfig": "apps/google-agent/tsconfig.spec.json"
+            "tsConfig": "apps/google-agent/tsconfig.spec.json",
+            "passWithNoTests": true
           }
         }
       }
@@ -280,21 +306,55 @@
               "libs/common/tsconfig.lib.json",
               "libs/common/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/common/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/common/**"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/common/jest.config.js",
-            "tsConfig": "libs/common/tsconfig.spec.json"
+            "tsConfig": "libs/common/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "data-access": {
+      "root": "libs/data-access",
+      "sourceRoot": "libs/data-access/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/data-access/tsconfig.lib.json",
+              "libs/data-access/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/data-access/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/data-access/jest.config.js",
+            "tsConfig": "libs/data-access/tsconfig.spec.json",
+            "passWithNoTests": true
           }
         }
       }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/angular"
+    "defaultCollection": "@nrwl/angular",
+    "analytics": "b9880151-c4a4-4fcd-be1e-1d24d75b0ee0"
   },
   "schematics": {
     "@nrwl/angular:application": {

@@ -1,32 +1,26 @@
 import { Injectable } from '@angular/core';
-import { createEffect } from '@ngrx/effects';
-import { DataPersistence } from '@nrwl/angular';
-import * as DevicesActions from './devices.actions';
-import * as fromDevices from './devices.reducer';
+import { Actions } from '@ngrx/effects';
+import { HomeAssistantService } from '../../services/home-assistant.service';
 
 @Injectable()
 export class DevicesEffects {
-  loadDevices$ = createEffect(() =>
-    this.dataPersistence.fetch(DevicesActions.loadDevices, {
-      run: (
-        action: ReturnType<typeof DevicesActions.loadDevices>,
-        state: fromDevices.DevicesPartialState
-      ) => {
-        // Your custom service 'load' logic goes here. For now just return a success action...
-        return DevicesActions.loadDevicesSuccess({ devices: [] });
-      },
+  // loadDevices$ = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(UserActions.LoginSuccess),
+  //       tap(action => {
+  //         console.log(action);
 
-      onError: (
-        action: ReturnType<typeof DevicesActions.loadDevices>,
-        error
-      ) => {
-        console.error('Error', error);
-        return DevicesActions.loadDevicesFailure({ error });
-      }
-    })
-  );
+  //         const url = `ws://${action.user.url}:${action.user.port}/api/websocket`;
+
+  //         this.homeAssistantService.init(url, action.user.token);
+  //       })
+  //     ),
+  //   { dispatch: false }
+  // );
 
   constructor(
-    private dataPersistence: DataPersistence<fromDevices.DevicesPartialState>
+    private actions$: Actions,
+    private homeAssistantService: HomeAssistantService
   ) {}
 }

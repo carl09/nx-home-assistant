@@ -1,0 +1,47 @@
+<h3>
+  Device Info
+</h3>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Managed Device</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <nx-home-assistant-json-viewer
+      [json]="device$ | async"
+    ></nx-home-assistant-json-viewer>
+  </mat-card-content>
+</mat-card>
+<br />
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Entity</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <nx-home-assistant-json-viewer
+      [json]="entity$ | async"
+    ></nx-home-assistant-json-viewer>
+  </mat-card-content>
+</mat-card>
+<br />
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Query</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <nx-home-assistant-json-viewer
+      [json]="query$ | async"
+    ></nx-home-assistant-json-viewer>
+  </mat-card-content>
+</mat-card>
+<br />
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Sync</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <nx-home-assistant-json-viewer
+      [json]="sync$ | async"
+    ></nx-home-assistant-json-viewer>
+  </mat-card-content>
+</mat-card>

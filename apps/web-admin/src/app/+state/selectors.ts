@@ -1,44 +1,50 @@
 import { createSelector } from '@ngrx/store';
-import { State as deviceState } from './devices/devices.reducer';
+import {
+  devicesAdapter,
+  State as deviceState
+} from './devices/devices.reducer';
+import { managedDevicesAdapter } from './managed-devices/managed-devices.reducer';
 import { IRootState } from './store';
-
-// Lookup the 'Devices' feature state managed by NgRx
-// export const getDevicesState = createFeatureSelector<
-// IDeviceReducer,
-//   State
-// >();
 
 export const getDevicesState = (state: IRootState) => state.devices;
 
-// const { selectAll, selectEntities } = devicesAdapter.getSelectors();
+export const getDevicesSummary = (state: IRootState) => state.deviceSummary;
 
-// export const getDevicesLoaded = createSelector(
-//   getDevicesState,
-//   (state: State) => state.loaded
-// );
+const { selectAll, selectEntities } = devicesAdapter.getSelectors();
+const managedDevicesEntities = managedDevicesAdapter.getSelectors()
+  .selectEntities;
+const managedDevicesSelectAll = managedDevicesAdapter.getSelectors().selectAll;
 
-// export const getDevicesError = createSelector(
-//   getDevicesState,
-//   (state: State) => state.error
-// );
+export const getDevice = createSelector(
+  selectEntities,
+  (state, entityId: string) => state[entityId]
+);
 
-// export const getAllDevices = createSelector(
-//   getDevicesState,
-//   (state: State) => selectAll(state)
-// );
+export const getManagedDevice = createSelector(
+  managedDevicesEntities,
+  (state, entityId: string) => state[entityId]
+);
 
-// export const getDevicesEntities = createSelector(
-//   getDevicesState,
-//   (state: State) => selectEntities(state)
-// );
+export const getAllManagedDevices = createSelector(
+  managedDevicesSelectAll,
+  state => state
+);
+
+export const getDeviceList = createSelector(selectAll, state => {
+  return state.map(x => {
+    return {
+      entity_id: x.entity_id,
+      title: x.attributes.friendly_name || x.entity_id
+    };
+  });
+});
 
 export const getSelectedId = createSelector(
   getDevicesState,
   (state: deviceState) => state.selectedId
 );
 
-// export const getSelected = createSelector(
-//   getDevicesEntities,
-//   getSelectedId,
-//   (entities, selectedId) => selectedId && entities[selectedId]
-// );
+export const getDeviceSummaryEntities = createSelector(
+  getDevicesSummary,
+  state => state.entities
+);

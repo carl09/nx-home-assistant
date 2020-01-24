@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { IHomeAssistantEntity } from '@nx-home-assistant/common';
+import { IHomeAssistantEntityStatus } from '@nx-home-assistant/common';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { loadDevicesSelected } from '../+state/devices/devices.actions';
-import { devicesAdapter } from '../+state/devices/devices.reducer';
-import { getSelectedId } from '../+state/selectors';
+import { getDeviceList, getSelectedId } from '../+state/selectors';
 import { IRootState } from '../+state/store';
 
 @Component({
@@ -16,21 +15,27 @@ import { IRootState } from '../+state/store';
 })
 export class HomeAssistantComponent {
   title = 'web-admin';
-  devices$: Observable<IHomeAssistantEntity[]>;
+  devices$: Observable<
+    {
+      entity_id: string;
+      title: string;
+    }[]
+  >;
   selectEntityId$: Observable<string>;
 
   selectedId: string;
 
   constructor(private store: Store<IRootState>) {
-    this.devices$ = this.store
-      .select('devices')
-      .pipe(map(devicesAdapter.getSelectors().selectAll));
+    this.devices$ = this.store.pipe(
+      select(x => getDeviceList(x.devices)),
+      tap(x => console.log('devices$', x))
+    );
 
     this.selectEntityId$ = this.store.pipe(select(x => getSelectedId(x)));
     // this.store.select('devices').pipe(map(x => getSelectedId(x)))
   }
 
-  onClickDevice(event: IHomeAssistantEntity) {
+  onClickDevice(event: IHomeAssistantEntityStatus) {
     console.log('onClickDevice', event);
 
     const action = loadDevicesSelected({

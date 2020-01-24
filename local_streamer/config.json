@@ -1,0 +1,19 @@
+{
+  "name": "streamer",
+  "version": "2",
+  "slug": "streamer",
+  "description": "working on streamer",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "startup": "before",
+  "boot": "auto",
+  "options": {},
+  "schema": {},
+  "ports": {
+    "80/tcp": 8090
+  },
+  "ports_description": {
+    "80/tcp": "Streamer"
+  },
+  "map": ["config:rw"],
+  "homeassistant_api": true
+}

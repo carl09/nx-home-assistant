@@ -1,8 +1,8 @@
 import * as express_ from 'express';
 import * as http from 'http';
 import { environment } from './environments/environment';
+import { namedLog } from '@nx-home-assistant/common';
 
-import { namedLog } from './utils/logging';
 const log = namedLog('Main');
 
 log.debug('Environment', environment);
@@ -27,6 +27,7 @@ import { createRestServer } from './app/rest-server';
 import { createWebSocket } from './app/socket-server';
 import { smarthome, SmartHomeJwt } from 'actions-on-google';
 import { readFileAsJson } from './utils/file';
+
 
 const express = express_;
 

@@ -3,39 +3,25 @@ import {
   IManagedDeviceModel,
   IHomeAssistantArea,
   IHomeAssistantEntity,
-  IHomeAssistantDevice
+  IHomeAssistantDevice,
+  namedLog
 } from '@nx-home-assistant/common';
 import {
   getDevicesCallBack,
   upsertManagedDevice
 } from '@nx-home-assistant/data-access';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-import { filter, map, mergeMap, tap, shareReplay } from 'rxjs/operators';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { Observable, ReplaySubject } from 'rxjs';
+import { filter, map, shareReplay } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { SmartHomeApp } from 'actions-on-google';
-import { namedLog } from '../utils/logging';
+import { HomeAssistantWebSocket, IMassageBase } from './home-assistant-server';
 
 const log = namedLog('Data Access');
 
 export const globalAgentUserId = 'fedf0bfd-5e8b-422c-8886-04bf293dde9f';
 
-// tslint:disable-next-line
-(global as any).WebSocket = require('ws');
-
-interface IMassageBase {
-  type: string;
-  id?: number;
-  access_token?: string;
-  success?: boolean;
-  event?: {
-    event_type?: string;
-  };
-  event_type?: string;
-}
-
 export class DataAccess {
-  private webSocket: WebSocketSubject<IMassageBase>;
+  private homeAssistantWebSocket: HomeAssistantWebSocket;
 
   private fireBase: ReplaySubject<IManagedDeviceModel[]>;
   private entityStatus: Observable<IHomeAssistantEntityStatus[]>;
@@ -47,15 +33,12 @@ export class DataAccess {
 
   private counter = 1;
 
-  private homeAssistantActive: BehaviorSubject<boolean> = new BehaviorSubject(
-    false
-  );
-
-  private homeAssistantResult: ReplaySubject<IMassageBase> = new ReplaySubject(
-    1
-  );
-
-  constructor(private token: string, private googleHome?: SmartHomeApp) {}
+  constructor(private token: string, private googleHome?: SmartHomeApp) {
+    this.homeAssistantWebSocket = new HomeAssistantWebSocket(
+      `${environment.homeAssistaneSocketUri}/websocket`,
+      token
+    );
+  }
 
   upsertManagedDevice(update: IManagedDeviceModel) {
     upsertManagedDevice(update);
@@ -81,10 +64,6 @@ export class DataAccess {
 
   getEntityStatus(): Observable<IHomeAssistantEntityStatus[]> {
     if (!this.entityStatus) {
-      if (!this.webSocket) {
-        this.initWebSocket();
-      }
-
       this.entityStatus = this.createSubScription(
         {
           id: this.counter,
@@ -103,10 +82,6 @@ export class DataAccess {
 
   getEntityStatusUpdated(): Observable<IHomeAssistantEntityStatus> {
     if (!this.entityStatusUpdated) {
-      if (!this.webSocket) {
-        this.initWebSocket();
-      }
-
       this.entityStatusUpdated = this.createSubScription(
         {
           id: this.counter,
@@ -192,56 +167,10 @@ export class DataAccess {
   }
 
   private createSubScription(iniMessage: IMassageBase, resultId: number) {
-    return this.homeAssistantActive.pipe(
-      filter(x => x),
-      tap(() => {
-        this.webSocket.next(iniMessage);
-      }),
-      mergeMap(() => {
-        return this.homeAssistantResult.pipe(filter(x => x.id === resultId));
-      })
-    );
-  }
+    this.homeAssistantWebSocket.next(iniMessage);
 
-  private initWebSocket() {
-    this.webSocket = webSocket<IMassageBase>({
-      url: `${environment.homeAssistaneSocketUri}/websocket`,
-      closeObserver: {
-        next(err) {
-          log.error('Home Assistant Web Socket Closed', err);
-        }
-      }
-    });
-
-    this.webSocket.subscribe(
-      msg => {
-        this.processMessage(msg, this.token);
-      },
-      err => log.error('ws error', err),
-      () => log.warn('webSocket completed')
-    );
-  }
-
-  private processMessage(msg: IMassageBase, token: string) {
-    if (msg.type === 'auth_required') {
-      this.webSocket.next({
-        type: 'auth',
-        access_token: token
-      });
-    } else if (msg.type === 'auth_ok') {
-      this.homeAssistantActive.next(true);
-    } else if (msg.type === 'result') {
-      this.homeAssistantResult.next(msg);
-    } else if (msg.type === 'event') {
-      this.homeAssistantResult.next(msg);
-    } else if (msg.type === 'auth_invalid') {
-      log.error('Auth Error', (msg as any).message);
-      log.info('Token', {
-        token: this.token,
-        url: `${environment.homeAssistaneSocketUri}/websocket`
-      });
-    } else {
-      log.warn('processMessage unknown', msg);
-    }
+    return this.homeAssistantWebSocket
+      .messages()
+      .pipe(filter(x => x.id === resultId));
   }
 }

@@ -6,7 +6,8 @@ import {
   HomeAssistantDeviceInfoType,
   createQueryDevice,
   ServerMessage,
-  ManageDevicesUpdateType
+  ManageDevicesUpdateType,
+  namedLog
 } from '@nx-home-assistant/common';
 import * as http from 'http';
 import * as WebSocket from 'ws';
@@ -14,7 +15,6 @@ import { DataAccess } from './data-access';
 import { takeUntil, map, filter } from 'rxjs/operators';
 import { Subject, combineLatest } from 'rxjs';
 import { setDeviceStatus } from '@nx-home-assistant/data-access';
-import { namedLog } from '../utils/logging';
 
 const log = namedLog('Socket Service');
 

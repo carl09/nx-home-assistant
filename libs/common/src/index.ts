@@ -7,4 +7,5 @@ export * from './lib/device.types';
 export * from './lib/device.execute';
 export * from './lib/call.service';
 
-export * from './lib/models/server-messages'
+export * from './lib/models/server-messages';
+export * from './utils/logging';

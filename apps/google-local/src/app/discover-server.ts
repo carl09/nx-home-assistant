@@ -1,6 +1,6 @@
 import { encode } from 'cbor';
 import { createSocket } from 'dgram';
-import { namedLog } from '../utils/logging';
+import { namedLog } from '@nx-home-assistant/common';
 
 const log = namedLog('UDP Service');
 

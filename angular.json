@@ -22,8 +22,13 @@
             "tsConfig": "apps/web-admin/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "apps/web-admin/src/favicon.ico",
-              "apps/web-admin/src/assets"
+              { "glob": "**/*", "input": "./assets/", "output": "./assets/" },
+              { "glob": "favicon.ico", "input": "./", "output": "./" },
+              {
+                "glob": "mdi.svg",
+                "input": "./node_modules/@mdi/angular-material",
+                "output": "./assets"
+              }
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
@@ -87,10 +92,7 @@
               "apps/web-admin/tsconfig.app.json",
               "apps/web-admin/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/web-admin/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/web-admin/**"]
           }
         },
         "test": {
@@ -155,10 +157,7 @@
               "apps/google-local/tsconfig.app.json",
               "apps/google-local/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/google-local/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/google-local/**"]
           }
         },
         "test": {
@@ -184,9 +183,7 @@
             "outputPath": "dist/apps/functions",
             "main": "apps/functions/src/main.ts",
             "tsConfig": "apps/functions/tsconfig.app.json",
-            "assets": [
-              "apps/functions/src/assets"
-            ]
+            "assets": ["apps/functions/src/assets"]
           },
           "configurations": {
             "production": {
@@ -205,7 +202,7 @@
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "functions:build",
+            "buildTarget": "functions:build"
           }
         },
         "lint": {
@@ -215,10 +212,7 @@
               "apps/functions/tsconfig.app.json",
               "apps/functions/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/functions/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/functions/**"]
           }
         },
         "test": {
@@ -277,10 +271,7 @@
               "apps/google-agent/tsconfig.app.json",
               "apps/google-agent/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/google-agent/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/google-agent/**"]
           }
         },
         "test": {
@@ -306,10 +297,7 @@
               "libs/common/tsconfig.lib.json",
               "libs/common/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/common/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/common/**"]
           }
         },
         "test": {
@@ -335,10 +323,7 @@
               "libs/data-access/tsconfig.lib.json",
               "libs/data-access/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/data-access/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/data-access/**"]
           }
         },
         "test": {

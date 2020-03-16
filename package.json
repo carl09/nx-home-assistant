@@ -46,6 +46,7 @@
     "@angular/platform-browser-dynamic": "^9.0.6",
     "@angular/router": "^9.0.6",
     "@google/local-home-sdk": "^0.2.1",
+    "@mdi/angular-material": "^5.0.45",
     "@ngrx/effects": "9.0.0",
     "@ngrx/entity": "9.0.0",
     "@ngrx/router-store": "9.0.0",

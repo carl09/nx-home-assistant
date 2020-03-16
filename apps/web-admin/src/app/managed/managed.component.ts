@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { getAllManagedDevices } from '../+state/selectors';
 import { IRootState } from '../+state/store';
+import { MatDialog } from '@angular/material/dialog';
+import { ManagedDialogComponent } from './managed-dialog/managed-dialog.component';
 
 @Component({
   selector: 'nx-home-assistant-managed',
@@ -18,7 +20,7 @@ export class ManagedComponent implements OnInit {
   viewId: string;
   editId: string;
 
-  constructor(private store: Store<IRootState>) {
+  constructor(private store: Store<IRootState>, public dialog: MatDialog) {
     this.devices$ = this.store
       .select(x => getAllManagedDevices(x.managedDevices))
       .pipe(tap(x => console.log('devices$', x)));
@@ -42,5 +44,9 @@ export class ManagedComponent implements OnInit {
     this.viewId = undefined;
   }
 
-  addNew() {}
+  addNew() {
+    this.dialog.open(ManagedDialogComponent, {
+      width: '250px'
+    });
+  }
 }

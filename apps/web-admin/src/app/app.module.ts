@@ -5,13 +5,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -25,6 +25,8 @@ import { JsonViewerComponent } from './json-viewer/json-viewer.component';
 import { ManagedEditComponent } from './managed/managed-edit/managed-edit.component';
 import { ManagedViewComponent } from './managed/managed-view/managed-view.component';
 import { ManagedComponent } from './managed/managed.component';
+import { ManagedDialogComponent } from './managed/managed-dialog/managed-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { ManagedComponent } from './managed/managed.component';
     ManagedComponent,
     ManagedViewComponent,
     JsonViewerComponent,
-    ManagedEditComponent
+    ManagedEditComponent,
+    ManagedDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -59,9 +62,14 @@ import { ManagedComponent } from './managed/managed.component';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    MatDialogModule,
     ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer){
+    matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg')); // Or whatever path you placed mdi.svg at
+  }
+}

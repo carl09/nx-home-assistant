@@ -1,5 +1,13 @@
-<button mat-button color="primary" (click)="addNew()">Add New</button>
+<!-- <button mat-button>
+  <mat-icon svgIcon="code-tags" aria-label="Code icon"></mat-icon>
+  View source
+</button>
 
+<br/>
+<br/>
+<mat-icon svgIcon="android" aria-label="Android icon"></mat-icon>
+<br/>
+<br/> -->
 <div class="row">
   <div class="column">
     <h3>
@@ -19,9 +27,14 @@
     <ng-template #loading>Loading&hellip;</ng-template>
   </div>
   <div class="column">
-
-    <nx-home-assistant-managed-view *ngIf="viewId" [id]="viewId"></nx-home-assistant-managed-view>
-    <nx-home-assistant-managed-edit *ngIf="editId" [id]="editId" (cancel)="onCancel()"></nx-home-assistant-managed-edit>
-    <!-- <router-outlet></router-outlet> -->
+    <nx-home-assistant-managed-view
+      *ngIf="viewId"
+      [id]="viewId"
+    ></nx-home-assistant-managed-view>
+    <nx-home-assistant-managed-edit
+      *ngIf="editId"
+      [id]="editId"
+      (cancel)="onCancel()"
+    ></nx-home-assistant-managed-edit>
   </div>
 </div>

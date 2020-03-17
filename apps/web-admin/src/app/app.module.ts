@@ -1,4 +1,5 @@
 import { LayoutModule } from '@angular/cdk/layout';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,7 +13,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -46,6 +46,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     NxModule.forRoot(),
     StoreModule.forRoot<IRootState>(reducers, {
       metaReducers: !environment.production ? [] : [],
@@ -57,7 +58,6 @@ const appRoutes: Routes = [
     HttpClientModule,
     EffectsModule.forRoot(effects),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    BrowserAnimationsModule,
     LayoutModule,
     MatToolbarModule,
     MatButtonModule,
@@ -70,7 +70,7 @@ const appRoutes: Routes = [
     MatInputModule,
     MatDialogModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true, useHash: true })
+    RouterModule.forRoot(appRoutes, { enableTracing: false, useHash: true })
   ],
   providers: [],
   bootstrap: [AppComponent]

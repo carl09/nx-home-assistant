@@ -27,6 +27,12 @@ import { ManagedViewComponent } from './managed/managed-view/managed-view.compon
 import { ManagedComponent } from './managed/managed.component';
 import { ManagedDialogComponent } from './managed/managed-dialog/managed-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+  { path: '', component: ManagedComponent },
+  { path: 'home', component: HomeAssistantComponent }
+];
 
 @NgModule({
   declarations: [
@@ -63,13 +69,16 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSelectModule,
     MatInputModule,
     MatDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forRoot(appRoutes, { enableTracing: true, useHash: true })
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer){
-    matIconRegistry.addSvgIconSet(domSanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg')); // Or whatever path you placed mdi.svg at
+  constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
+    matIconRegistry.addSvgIconSet(
+      domSanitizer.bypassSecurityTrustResourceUrl('./assets/mdi.svg')
+    ); // Or whatever path you placed mdi.svg at
   }
 }

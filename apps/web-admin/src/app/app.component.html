@@ -2,5 +2,13 @@
   <span>web-admin</span>
 </mat-toolbar>
 <main>
-  <nx-home-assistant-managed></nx-home-assistant-managed>
+
+  <nav>
+    <a routerLink="/" routerLinkActive="active">devices</a>
+    <br>
+    <a routerLink="/home" routerLinkActive="active">List</a>
+  </nav>
+
+  <!-- <nx-home-assistant-managed></nx-home-assistant-managed> -->
+  <router-outlet></router-outlet>
 </main>

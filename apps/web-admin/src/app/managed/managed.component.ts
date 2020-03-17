@@ -1,12 +1,18 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { IManagedDeviceModel } from '@nx-home-assistant/common';
+import { IManagedDeviceModel, namedLog } from '@nx-home-assistant/common';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { getAllManagedDevices } from '../+state/selectors';
 import { IRootState } from '../+state/store';
 import { MatDialog } from '@angular/material/dialog';
 import { ManagedDialogComponent } from './managed-dialog/managed-dialog.component';
+
+const log = namedLog('ManagedComponent');
+
+interface IViewManageDevice extends IManagedDeviceModel {
+  icon: string;
+}
 
 @Component({
   selector: 'nx-home-assistant-managed',
@@ -15,7 +21,7 @@ import { ManagedDialogComponent } from './managed-dialog/managed-dialog.componen
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManagedComponent implements OnInit {
-  devices$: Observable<IManagedDeviceModel[]>;
+  devices$: Observable<IViewManageDevice[]>;
 
   viewId: string;
   editId: string;
@@ -23,7 +29,38 @@ export class ManagedComponent implements OnInit {
   constructor(private store: Store<IRootState>, public dialog: MatDialog) {
     this.devices$ = this.store
       .select(x => getAllManagedDevices(x.managedDevices))
-      .pipe(tap(x => console.log('devices$', x)));
+      .pipe(
+        map(x => {
+          return x.map(d => {
+            let icon = 'power-socket-au';
+            switch (d.deviceType) {
+              case 'action.devices.types.SWITCH':
+                icon = 'power-socket-au';
+                break;
+              case 'action.devices.types.THERMOSTAT':
+                icon = 'air-conditioner';
+                break;
+              case 'action.devices.types.FAN':
+                icon = 'fan';
+                break;
+              case 'action.devices.types.CAMERA':
+                icon = 'cctv';
+                break;
+              case 'action.devices.types.MICROWAVE':
+                icon = 'toaster-oven';
+                break;
+              case 'action.devices.types.COFFEE_MAKER':
+                icon = 'coffee-maker';
+                break;
+              default:
+                log.warn(d.deviceType);
+            }
+
+            return { ...d, icon };
+          });
+        }),
+        tap(x => console.log('devices$', x))
+      );
   }
 
   ngOnInit() {}

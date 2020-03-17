@@ -1,23 +1,20 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import {
   createQueryDevice,
   createSyncDevice,
   CustomSmartHomeV1SyncDevices,
   IHomeAssistantEntityStatus,
-  IManagedDeviceModel
+  IManagedDeviceModel,
+  namedLog
 } from '@nx-home-assistant/common';
-import { combineLatest, EMPTY, Observable, ReplaySubject } from 'rxjs';
+import { combineLatest, EMPTY, Observable } from 'rxjs';
 import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { getDevice } from '../../+state/selectors';
-import { IRootState } from '../../+state/store';
+import { IRootState } from '../+state/store';
+import { getDevice } from '../+state/selectors';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+
+const log = namedLog('ManagedViewComponent');
 
 @Component({
   selector: 'nx-home-assistant-managed-view',
@@ -25,9 +22,7 @@ import { IRootState } from '../../+state/store';
   styleUrls: ['./managed-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ManagedViewComponent implements OnInit, OnChanges {
-  @Input() id: string;
-
+export class ManagedViewComponent {
   device$: Observable<IManagedDeviceModel>;
 
   entity$: Observable<IHomeAssistantEntityStatus>;
@@ -35,19 +30,27 @@ export class ManagedViewComponent implements OnInit, OnChanges {
 
   query$: Observable<any>;
 
-  private entityId$: ReplaySubject<string> = new ReplaySubject(1);
+  constructor(private route: ActivatedRoute, private store: Store<IRootState>) {
+    log.info('[ManagedViewComponent] ctor');
 
-  constructor(private store: Store<IRootState>) {
-    console.log('[ManagedViewComponent] ctor');
-    this.device$ = this.entityId$.asObservable().pipe(
-      tap(x => console.log('route.params', x)),
+    const entityId$ = this.route.params.pipe(
+      map((params: ParamMap) => {
+        log.info('entityId$', params);
+        return params['id'] as string;
+      })
+    );
+
+    this.device$ = entityId$.pipe(
+      tap(id => {
+        log.info('route.params', id);
+      }),
       switchMap(id => {
         return this.store.pipe(
           select(y => y.managedDevices),
           map(x => x.entities[id])
         );
       }),
-      tap(x => console.log('device$', x)),
+      tap(x => log.info('device$', x)),
       shareReplay()
     );
 
@@ -58,7 +61,7 @@ export class ManagedViewComponent implements OnInit, OnChanges {
         }
         return this.store.pipe(select(y => getDevice(y.devices, x.entityId)));
       }),
-      tap(x => console.log('entity$', x)),
+      tap(x => log.info('entity$', x)),
       shareReplay()
     );
 
@@ -69,7 +72,7 @@ export class ManagedViewComponent implements OnInit, OnChanges {
         }
         return undefined;
       }),
-      tap(x => console.log('sync$', x))
+      tap(x => log.info('sync$', x))
     );
 
     this.query$ = combineLatest([this.device$, this.entity$]).pipe(
@@ -79,21 +82,7 @@ export class ManagedViewComponent implements OnInit, OnChanges {
         }
         return undefined;
       }),
-      tap(x => console.log('query$', x))
+      tap(x => log.info('query$', x))
     );
-
-    // const deviceStatus = createQueryDevice(device.model.traits, entity);
-  }
-
-  ngOnInit(): void {
-    console.log('[ManagedViewComponent] ngOnInit');
-
-    this.entityId$.next(this.id);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.id) {
-      this.entityId$.next(changes.id.currentValue);
-    }
   }
 }

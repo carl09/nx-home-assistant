@@ -62,7 +62,7 @@
   <button [disabled]="deviceForm.invalid" mat-button color="primary">
     Save
   </button>
-  <button mat-button (click)="onCancel()">
+  <button mat-button [routerLink]="['/']">
     Cancel
   </button>
 </form>

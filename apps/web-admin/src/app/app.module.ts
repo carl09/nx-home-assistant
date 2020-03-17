@@ -22,15 +22,17 @@ import { IRootState, reducers, effects } from './+state/store';
 import { AppComponent } from './app.component';
 import { HomeAssistantComponent } from './home-assistant/home-assistant.component';
 import { JsonViewerComponent } from './json-viewer/json-viewer.component';
-import { ManagedEditComponent } from './managed/managed-edit/managed-edit.component';
-import { ManagedViewComponent } from './managed/managed-view/managed-view.component';
 import { ManagedComponent } from './managed/managed.component';
 import { ManagedDialogComponent } from './managed/managed-dialog/managed-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule, Routes } from '@angular/router';
+import { ManagedViewComponent } from './managed-view/managed-view.component';
+import { ManagedEditComponent } from './managed-edit/managed-edit.component';
 
 const appRoutes: Routes = [
   { path: '', component: ManagedComponent },
+  { path: 'edit/:id', component: ManagedEditComponent },
+  { path: 'view/:id', component: ManagedViewComponent },
   { path: 'home', component: HomeAssistantComponent }
 ];
 

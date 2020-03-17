@@ -1,11 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
-  Input,
   Output,
   EventEmitter,
   SimpleChanges,
+  OnInit,
   OnChanges
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -13,13 +12,17 @@ import { select, Store } from '@ngrx/store';
 import {
   deviceTraits,
   deviceTypes,
-  IManagedDeviceModel
+  IManagedDeviceModel,
+  namedLog
 } from '@nx-home-assistant/common';
-import { Observable, EMPTY, ReplaySubject } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { updateManagedDevicesRequest } from '../../+state/managed-devices/managed-devices.actions';
-import { getDeviceList } from '../../+state/selectors';
-import { IRootState } from '../../+state/store';
+import { IRootState } from '../+state/store';
+import { getDeviceList } from '../+state/selectors';
+import { updateManagedDevicesRequest } from '../+state/managed-devices/managed-devices.actions';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+
+const log = namedLog('ManagedEditComponent');
 
 interface Entity {
   text: string;
@@ -38,8 +41,6 @@ interface EntityGroup {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManagedEditComponent implements OnInit, OnChanges {
-  @Input() id: string;
-
   @Output() cancel: EventEmitter<void> = new EventEmitter();
 
   device$: Observable<IManagedDeviceModel>;
@@ -49,11 +50,16 @@ export class ManagedEditComponent implements OnInit, OnChanges {
 
   deviceForm: FormGroup;
 
-  private entityId$: ReplaySubject<string> = new ReplaySubject(1);
+  constructor(private route: ActivatedRoute, private store: Store<IRootState>) {
+    const entityId$ = this.route.params.pipe(
+      map((params: ParamMap) => {
+        log.info('entityId$', params);
+        return params['id'] as string;
+      })
+    );
 
-  constructor(private store: Store<IRootState>) {
-    this.device$ = this.entityId$.asObservable().pipe(
-      tap(x => console.log('route.params', x)),
+    this.device$ = entityId$.pipe(
+      tap(x => log.info('route.params', x)),
       switchMap(id => {
         if (id) {
           return this.store.pipe(
@@ -67,7 +73,7 @@ export class ManagedEditComponent implements OnInit, OnChanges {
         if (x) {
           this.updateFormValues(x);
         }
-        console.log('device$', x);
+        log.info('device$', x);
       })
     );
 
@@ -90,7 +96,7 @@ export class ManagedEditComponent implements OnInit, OnChanges {
         });
 
         return Object.keys(group).map(y => group[y]);
-      }),
+      })
       // take(1),
       // tap(x => console.log('entitiesGrouped$', x))
     );
@@ -113,15 +119,9 @@ export class ManagedEditComponent implements OnInit, OnChanges {
     });
 
     this.deviceTraits = deviceTraits;
-
-    this.entityId$.next(this.id);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.id) {
-      this.entityId$.next(changes.id.currentValue);
-    }
-  }
+  ngOnChanges(_changes: SimpleChanges): void {}
 
   public onSubmit() {
     const device: IManagedDeviceModel = {
@@ -131,7 +131,7 @@ export class ManagedEditComponent implements OnInit, OnChanges {
       entityId: this.deviceForm.value.entityId,
       deviceType: this.deviceForm.value.deviceType,
       traits: this.deviceForm.value.traits,
-      id: this.id,
+      id: undefined, // this.id,
       uid: undefined
     };
 
@@ -140,12 +140,12 @@ export class ManagedEditComponent implements OnInit, OnChanges {
   }
 
   public onCancel() {
-    console.log('[ManagedEditComponent] onCancel');
+    log.info('[ManagedEditComponent] onCancel');
     this.cancel.emit();
   }
 
   private updateFormValues(device: IManagedDeviceModel) {
-    console.log('updateFormValues', device);
+    log.info('updateFormValues', device);
 
     this.deviceForm.patchValue({
       name: device.name,

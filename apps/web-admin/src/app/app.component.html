@@ -1,11 +1,11 @@
 <mat-toolbar color="primary">
   <span>web-admin</span>
 </mat-toolbar>
-<nav>
+<!-- <nav>
   <a routerLink="/" routerLinkActive="active">devices</a>
-  <br>
+  <br />
   <a routerLink="/home" routerLinkActive="active">List</a>
-</nav>
-<main [@routerTransition]="getPageTransition(routerOutlet)">
+</nav> -->
+<main class="content" [@routerTransition]="getPageTransition(routerOutlet)">
   <router-outlet #routerOutlet="outlet"></router-outlet>
 </main>

@@ -1,3 +1,6 @@
+<a mat-fab color="primary" id="add-button" (click)="addNew()">
+  <mat-icon svgIcon="plus" aria-label="Add New"></mat-icon>
+</a>
 <h3>
   Devices
 </h3>
@@ -22,12 +25,12 @@
       ></nx-home-assistant-json-viewer>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-icon-button [routerLink]="['/edit', item.id]">
+      <a mat-icon-button [routerLink]="['/edit', item.id]">
         <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-icon-button [routerLink]="['/view', item.id]">
+      </a>
+      <a mat-icon-button [routerLink]="['/view', item.id]">
         <mat-icon>info</mat-icon>
-      </button>
+      </a>
     </mat-card-actions>
   </mat-card>
 </div>

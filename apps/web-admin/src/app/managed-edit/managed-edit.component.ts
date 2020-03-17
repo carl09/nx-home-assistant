@@ -50,15 +50,17 @@ export class ManagedEditComponent implements OnInit, OnChanges {
 
   deviceForm: FormGroup;
 
+  private entityId$: Observable<string>;
+
   constructor(private route: ActivatedRoute, private store: Store<IRootState>) {
-    const entityId$ = this.route.params.pipe(
+    this.entityId$ = this.route.params.pipe(
       map((params: ParamMap) => {
         log.info('entityId$', params);
         return params['id'] as string;
       })
     );
 
-    this.device$ = entityId$.pipe(
+    this.device$ = this.entityId$.pipe(
       tap(x => log.info('route.params', x)),
       switchMap(id => {
         if (id) {
@@ -97,9 +99,16 @@ export class ManagedEditComponent implements OnInit, OnChanges {
 
         return Object.keys(group).map(y => group[y]);
       })
-      // take(1),
-      // tap(x => console.log('entitiesGrouped$', x))
     );
+
+    this.deviceTypes = deviceTypes.map(x => {
+      return {
+        value: x.code,
+        text: x.name
+      };
+    });
+
+    this.deviceTraits = deviceTraits;
   }
 
   ngOnInit(): void {
@@ -110,15 +119,6 @@ export class ManagedEditComponent implements OnInit, OnChanges {
       localId: new FormControl(''),
       traits: new FormControl()
     });
-
-    this.deviceTypes = deviceTypes.map(x => {
-      return {
-        value: x.code,
-        text: x.name
-      };
-    });
-
-    this.deviceTraits = deviceTraits;
   }
 
   ngOnChanges(_changes: SimpleChanges): void {}

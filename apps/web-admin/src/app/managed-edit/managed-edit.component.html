@@ -59,10 +59,10 @@
       <input formControlName="localId" matInput placeholder="Local Device Id" />
     </mat-form-field>
   </div>
-  <button [disabled]="deviceForm.invalid" mat-button color="primary">
+  <button [disabled]="deviceForm.invalid" mat-stroked-button color="primary">
     Save
   </button>
-  <button mat-button [routerLink]="['/']">
+  <a mat-stroked-button [routerLink]="['/']">
     Cancel
-  </button>
+  </a>
 </form>

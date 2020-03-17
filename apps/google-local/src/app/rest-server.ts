@@ -9,6 +9,7 @@ import * as fs from 'fs';
 import { getWebRootPath } from '../utils/file';
 
 const log = namedLog('Rest Service');
+const express = express_;
 
 const callLocalService = (token: string): CallService => {
   return (domain: string, service: string, data: { [key: string]: string }) => {
@@ -116,6 +117,8 @@ export const createRestServer = (
 
     res.status(200).json(result);
   });
+
+  app.use('/assets', express.static(getWebRootPath('assets')))
 
   app.use((_req, res, _next) => {
     const segments = _req.url.split('/');

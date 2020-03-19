@@ -1,42 +1,28 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Output,
-  EventEmitter,
-  SimpleChanges,
+  OnChanges,
   OnInit,
-  OnChanges
+  SimpleChanges
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import {
-  deviceTraits,
-  deviceTypes,
   IManagedDeviceModel,
   namedLog
 } from '@nx-home-assistant/common';
-import { Observable, EMPTY } from 'rxjs';
-import { map, switchMap, tap, distinctUntilChanged } from 'rxjs/operators';
-import { IRootState } from '../+state/store';
-import { getDeviceList } from '../+state/selectors';
-import {
-  updateManagedDevicesRequest,
-  deleteManagedDevicesRequest
-} from '../+state/managed-devices/managed-devices.actions';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { isEqual } from 'lodash';
+import { EMPTY, Observable } from 'rxjs';
+import { distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
+import {
+  deleteManagedDevicesRequest,
+  updateManagedDevicesRequest
+} from '../+state/managed-devices/managed-devices.actions';
+import { getDeviceList } from '../+state/selectors';
+import { IRootState } from '../+state/store';
+import { IOption } from '../models/options.model';
 
 const log = namedLog('ManagedEditComponent');
-
-interface Entity {
-  text: string;
-  value: string;
-}
-
-interface EntityGroup {
-  name: string;
-  entities: Entity[];
-}
 
 @Component({
   selector: 'nx-home-assistant-managed-edit',
@@ -46,7 +32,7 @@ interface EntityGroup {
 })
 export class ManagedEditComponent implements OnInit, OnChanges {
   device$: Observable<IManagedDeviceModel>;
-  entitiesGrouped$: Observable<EntityGroup[]>;
+  entitiesGrouped$: Observable<IOption[]>;
 
   private entityId$: Observable<string>;
 
@@ -78,24 +64,6 @@ export class ManagedEditComponent implements OnInit, OnChanges {
     this.entitiesGrouped$ = this.store.pipe(
       select(x => getDeviceList(x.devices)),
       distinctUntilChanged((x, y) => isEqual(x, y)),
-      map(x => {
-        const group: { [key: string]: EntityGroup } = {};
-        x.forEach(y => {
-          const [type] = y.entity_id.split('.');
-          if (!(type in group)) {
-            group[type] = {
-              name: type,
-              entities: []
-            };
-          }
-          group[type].entities.push({
-            text: y.title,
-            value: y.entity_id
-          });
-        });
-
-        return Object.keys(group).map(y => group[y]);
-      })
     );
   }
 

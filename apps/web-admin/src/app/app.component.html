@@ -1,11 +1,6 @@
 <mat-toolbar color="primary">
-  <span>web-admin</span>
+  <span>Google Home</span>
 </mat-toolbar>
-<!-- <nav>
-  <a routerLink="/" routerLinkActive="active">devices</a>
-  <br />
-  <a routerLink="/home" routerLinkActive="active">List</a>
-</nav> -->
 <main class="content" [@routerTransition]="getPageTransition(routerOutlet)">
   <router-outlet #routerOutlet="outlet"></router-outlet>
 </main>

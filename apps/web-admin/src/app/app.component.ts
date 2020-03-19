@@ -1,8 +1,8 @@
-import { environment } from '../environments/environment';
-import { ManagedDevicesService } from './services/managed-devices.service';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { environment } from '../environments/environment';
 import { routerTransition } from './router.animations';
+import { ManagedDevicesService } from './services/managed-devices.service';
 
 @Component({
   selector: 'nx-home-assistant-root',
@@ -12,7 +12,7 @@ import { routerTransition } from './router.animations';
   animations: [routerTransition],
 })
 export class AppComponent implements OnInit {
-  private previousPath: string = '';
+  private previousPath = '';
 
   constructor(private managedDevicesService: ManagedDevicesService) {}
 

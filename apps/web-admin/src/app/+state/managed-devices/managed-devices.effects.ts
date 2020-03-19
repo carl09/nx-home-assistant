@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { select, Store } from '@ngrx/store';
 import { IManagedDeviceModel } from '@nx-home-assistant/common';
 import { tap, withLatestFrom } from 'rxjs/operators';
 import { ManagedDevicesService } from '../../services/managed-devices.service';
-import * as ManagedDevicesActions from './managed-devices.actions';
-import { Store, select } from '@ngrx/store';
-import { IRootState } from '../store';
 import { getDeviceSummaryEntities } from '../selectors';
+import { IRootState } from '../store';
+import * as ManagedDevicesActions from './managed-devices.actions';
 
 @Injectable()
 export class ManagedDevicesEffects {

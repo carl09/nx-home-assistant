@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { IManagedDeviceModel, namedLog } from '@nx-home-assistant/common';
 import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
-import { getAllManagedDevices, getAllManagedDevicesSorted } from '../+state/selectors';
+import { map, tap } from 'rxjs/operators';
+import { getAllManagedDevicesSorted } from '../+state/selectors';
 import { IRootState } from '../+state/store';
-import { MatDialog } from '@angular/material/dialog';
 import { ManagedDialogComponent } from './managed-dialog/managed-dialog.component';
 
 const log = namedLog('ManagedComponent');
@@ -82,8 +82,8 @@ export class ManagedComponent implements OnInit {
   }
 
   addNew() {
-    this.dialog.open(ManagedDialogComponent, {
-      width: '250px'
-    });
+    // this.dialog.open(ManagedDialogComponent, {
+    //   width: '250px'
+    // });
   }
 }

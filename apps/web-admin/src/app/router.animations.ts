@@ -1,18 +1,14 @@
 import {
-  sequence,
-  trigger,
-  stagger,
   animate,
-  style,
   group,
   query as q,
+  style,
   transition,
-  keyframes,
-  animateChild
+  trigger
 } from '@angular/animations';
 
-const query = (style, animate, optional = { optional: true }) =>
-  q(style, animate, optional);
+const query = (selector, animation, optional = { optional: true }) =>
+  q(selector, animation, optional);
 
 const fade = [
   query(':enter, :leave', style({ position: 'fixed', width: '100%' })),

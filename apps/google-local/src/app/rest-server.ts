@@ -97,10 +97,10 @@ export const createRestServer = (
 
     const body: {
       devices: any;
-      execution: {
+      execution: Array<{
         command: string;
         params: { [key: string]: any };
-      }[];
+      }>;
     } = req.body;
 
     log.info('Local Execution', {

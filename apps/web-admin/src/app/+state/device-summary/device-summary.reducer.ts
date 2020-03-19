@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { DeviceSummaryState } from './device-summary.models';
 import { loadDeviceSummary } from './device-summary.actions';
+import { DeviceSummaryState } from './device-summary.models';
 
 const initialState: DeviceSummaryState = {
   ids: [],

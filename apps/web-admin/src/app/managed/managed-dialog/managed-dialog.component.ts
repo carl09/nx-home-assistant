@@ -7,12 +7,10 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { deviceTraits, deviceTypes, IManagedDeviceModel } from '@nx-home-assistant/common';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { updateManagedDevicesRequest } from '../../+state/managed-devices/managed-devices.actions';
-import { getDeviceList } from '../../+state/selectors';
 import { IRootState } from '../../+state/store';
 
 interface Entity {
@@ -47,29 +45,29 @@ export class ManagedDialogComponent implements OnInit, OnChanges {
       traits: new FormControl()
     });
 
-    this.entitiesGrouped$ = this.store.pipe(
-      select(x => getDeviceList(x.devices)),
-      map(x => {
-        const group: { [key: string]: EntityGroup } = {};
-        x.forEach(y => {
-          const [type] = y.entity_id.split('.');
-          if (!(type in group)) {
-            group[type] = {
-              name: type,
-              entities: []
-            };
-          }
-          group[type].entities.push({
-            text: y.title,
-            value: y.entity_id
-          });
-        });
+    // this.entitiesGrouped$ = this.store.pipe(
+    //   select(x => getDeviceList(x.devices)),
+    //   map(x => {
+    //     const group: { [key: string]: EntityGroup } = {};
+    //     x.forEach(y => {
+    //       const [type] = y.entity_id.split('.');
+    //       if (!(type in group)) {
+    //         group[type] = {
+    //           name: type,
+    //           entities: []
+    //         };
+    //       }
+    //       group[type].entities.push({
+    //         text: y.title,
+    //         value: y.entity_id
+    //       });
+    //     });
 
-        return Object.keys(group).map(y => group[y]);
-      }),
-      // take(1),
-      // tap(x => console.log('entitiesGrouped$', x))
-    );
+    //     return Object.keys(group).map(y => group[y]);
+    //   }),
+    //   // take(1),
+    //   // tap(x => console.log('entitiesGrouped$', x))
+    // );
 
     this.deviceTypes = deviceTypes.map(x => {
       return {

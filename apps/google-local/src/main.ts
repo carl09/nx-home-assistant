@@ -1,7 +1,7 @@
+import { namedLog } from '@nx-home-assistant/common';
 import * as express_ from 'express';
 import * as http from 'http';
 import { environment } from './environments/environment';
-import { namedLog } from '@nx-home-assistant/common';
 
 const log = namedLog('Main');
 

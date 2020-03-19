@@ -143,11 +143,11 @@ export const execute = async (
     commands: []
   };
 
-  const items: {
+  const items: Array<{
     deviceId: string;
     execCommand: string;
     params: ApiClientObjectMap<any>;
-  }[] = [];
+  }> = [];
 
   for (const input of body.inputs) {
     for (const command of input.payload.commands) {

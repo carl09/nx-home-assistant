@@ -5,27 +5,35 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Entity</mat-label>
-      <mat-select formControlName="entityId">
-        <mat-option>--</mat-option>
+      <input
+        type="text"
+        matInput
+        placeholder="Entity"
+        formControlName="entityId"
+        [matAutocomplete]="autoGroup"
+      />
+      <mat-autocomplete #autoGroup="matAutocomplete">
         <mat-optgroup
-          *ngFor="let group of entitiesGrouped"
+          *ngFor="
+            let group of filteredEntitiesGrouped$ | async;
+            trackBy: trackByEntityGroup
+          "
           [label]="group.name"
         >
           <mat-option
-            *ngFor="let entity of group.entities"
+            *ngFor="let entity of group.entities; trackBy: trackByOption"
             [value]="entity.value"
           >
             {{ entity.text }}
           </mat-option>
         </mat-optgroup>
-      </mat-select>
+      </mat-autocomplete>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Device Type</mat-label>
       <mat-select formControlName="deviceType">
         <mat-option>--</mat-option>
-        <mat-option *ngFor="let entity of deviceTypes" [value]="entity.value">
+        <mat-option *ngFor="let entity of deviceTypes; trackBy: trackByOption" [value]="entity.value">
           {{ entity.text }}
         </mat-option>
       </mat-select>
@@ -34,8 +42,8 @@
       <mat-label>Traits</mat-label>
       <mat-select formControlName="traits" multiple>
         <mat-option>--</mat-option>
-        <mat-option *ngFor="let entity of deviceTraits" [value]="entity">
-          {{ entity }}
+        <mat-option *ngFor="let entity of deviceTraits; trackBy: trackByOption" [value]="entity.value">
+          {{ entity.text }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -56,8 +64,11 @@
       Cancel
     </button>
 
-    <button [disabled]="form.invalid" mat-stroked-button color="primary">
+    <!-- <button [disabled]="form.invalid" mat-stroked-button color="primary">
       Save
+    </button> -->
+    <button mat-fab color="primary" class="action-button" [disabled]="form.invalid">
+      <mat-icon svgIcon="content-save" aria-label="save"></mat-icon>
     </button>
   </div>
 </form>

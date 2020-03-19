@@ -8,24 +8,22 @@ import {
   Output,
   SimpleChanges
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   deviceTraits,
   deviceTypes,
   IManagedDeviceModel,
   namedLog
 } from '@nx-home-assistant/common';
+import { Observable } from 'rxjs';
+import { map, startWith, tap } from 'rxjs/operators';
+import { IOption } from '../../models/options.model';
 
 const log = namedLog('ManagedEditFormComponent');
 
-interface Entity {
-  text: string;
-  value: string;
-}
-
 interface EntityGroup {
   name: string;
-  entities: Entity[];
+  entities: IOption[];
 }
 
 @Component({
@@ -36,14 +34,16 @@ interface EntityGroup {
 })
 export class ManagedEditFormComponent implements OnInit, OnChanges {
   @Input() device: IManagedDeviceModel;
-  @Input() entitiesGrouped: EntityGroup[];
+  @Input() entitiesGrouped: IOption[];
 
   @Output() save: EventEmitter<IManagedDeviceModel> = new EventEmitter();
   @Output() delete: EventEmitter<string> = new EventEmitter();
   @Output() cancel: EventEmitter<void> = new EventEmitter();
 
-  deviceTypes: Entity[];
-  deviceTraits: string[];
+  deviceTypes: IOption[];
+  deviceTraits: IOption[];
+
+  filteredEntitiesGrouped$: Observable<EntityGroup[]>;
 
   form: FormGroup;
 
@@ -55,19 +55,56 @@ export class ManagedEditFormComponent implements OnInit, OnChanges {
       };
     });
 
-    this.deviceTraits = deviceTraits;
+    this.deviceTraits = deviceTraits.map(x => {
+      return {
+        text: x,
+        value: x
+      };
+    });
 
     this.form = new FormGroup({
       name: new FormControl(''),
-      entityId: new FormControl(''),
-      deviceType: new FormControl(''),
+      entityId: new FormControl('', Validators.required),
+      deviceType: new FormControl('', Validators.required),
       localId: new FormControl(''),
-      traits: new FormControl()
+      traits: new FormControl('', Validators.required)
     });
+
+    this.filteredEntitiesGrouped$ = this.form.get('entityId').valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const filterValue = value.toLowerCase();
+        return this.entitiesGrouped.filter(option => {
+          return (
+            option.text.toLowerCase().includes(filterValue) ||
+            option.value.toLowerCase().includes(filterValue)
+          );
+        });
+      }),
+      map(x => {
+        const group: { [key: string]: EntityGroup } = {};
+        x.forEach(y => {
+          const [type] = y.value.split('.');
+          if (!(type in group)) {
+            group[type] = {
+              name: type,
+              entities: []
+            };
+          }
+          group[type].entities.push({
+            text: y.text,
+            value: y.value
+          });
+        });
+
+        return Object.keys(group).map(y => group[y]);
+      }),
+      tap(x => log.info('filteredEntitiesGrouped', x))
+    );
   }
 
   ngOnInit(): void {
-    log.info('[ManagedEditComponent] ngOnInit', this.device);
+    log.info('ngOnInit', this.device);
 
     if (this.device) {
       this.form.patchValue(this.device);
@@ -88,7 +125,7 @@ export class ManagedEditFormComponent implements OnInit, OnChanges {
     }
   }
 
-  public onSubmit(value: IManagedDeviceModel) {
+  onSubmit(value: IManagedDeviceModel) {
     const device = {
       ...this.device,
       ...value
@@ -97,13 +134,21 @@ export class ManagedEditFormComponent implements OnInit, OnChanges {
     this.save.emit(device);
   }
 
-  public onCancel() {
+  onCancel() {
     log.info('[ManagedEditComponent] onCancel');
     this.cancel.emit();
   }
 
-  public onDelete() {
+  onDelete() {
     log.info('[ManagedEditComponent] onDelete', this.device.id);
     this.delete.emit(this.device.id);
+  }
+
+  trackByEntityGroup(_index: number, item: EntityGroup) {
+    return item.name;
+  }
+
+  trackByOption(_index: number, item: IOption) {
+    return item.value;
   }
 }

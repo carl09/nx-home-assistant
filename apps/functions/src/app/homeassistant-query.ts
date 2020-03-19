@@ -1,9 +1,9 @@
-import { setDeviceStatus } from '@nx-home-assistant/data-access';
 import {
   DeviceStatus,
   getTransforms,
   IManagedDeviceModel
 } from '@nx-home-assistant/common';
+import { setDeviceStatus } from '@nx-home-assistant/data-access';
 import * as admin from 'firebase-admin';
 import { IUserModel } from './common/user.model';
 import { getDeviceStatus, getEntity } from './utils/queries';

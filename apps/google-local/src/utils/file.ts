@@ -1,6 +1,6 @@
+import { namedLog } from '@nx-home-assistant/common';
 import * as fs from 'fs';
 import * as path from 'path';
-import { namedLog } from '@nx-home-assistant/common';
 
 const log = namedLog('File Util');
 

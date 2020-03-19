@@ -1,6 +1,3 @@
-<a mat-fab color="primary" id="add-button" (click)="addNew()">
-  <mat-icon svgIcon="plus" aria-label="Add New"></mat-icon>
-</a>
 <h3>
   Devices
 </h3>
@@ -36,3 +33,6 @@
 </div>
 
 <ng-template #loading>Loading&hellip;</ng-template>
+<a mat-fab color="primary" class="action-button" [routerLink]="['/add']">
+  <mat-icon svgIcon="plus" aria-label="Add New"></mat-icon>
+</a>

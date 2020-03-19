@@ -103,17 +103,6 @@ export const syncDevice = functions.https.onRequest(
     const entity: IHomeAssistantEntityStatus = request.body;
 
     console.info(`[Sync Device] entity`, entity.entity_id);
-
-//     const device = await findDeviceStatusByEntityId(entity.entity_id);
-
-//     const deviceStatus = createQueryDevice(device, entity);
-
-//     // // tslint:disable-next-line: no-floating-promises
-//     await setDeviceStatus(device.id, deviceStatus);
-
-//     response.json(deviceStatus);
-
-//     return true;
   }
 );
 

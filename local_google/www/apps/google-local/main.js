@@ -239,27 +239,27 @@ module.exports = require("rxjs");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return readFileAsJson; });
 /* unused harmony export getRootPath */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getWebRootPath; });
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(10);
-/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
+/* harmony import */ var _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10);
+/* harmony import */ var path__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_2__);
 
 
 
-const log = Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_2__["namedLog"])('File Util');
+const log = Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_0__["namedLog"])('File Util');
 const readFileAsJson = (filePath) => {
     log.info('Reading File:', filePath);
-    const rawdata = fs__WEBPACK_IMPORTED_MODULE_0__["readFileSync"](filePath);
+    const rawdata = fs__WEBPACK_IMPORTED_MODULE_1__["readFileSync"](filePath);
     return JSON.parse(rawdata.toString());
 };
 const getRootPath = () => {
-    return path__WEBPACK_IMPORTED_MODULE_1__["join"](__dirname);
+    return path__WEBPACK_IMPORTED_MODULE_2__["join"](__dirname);
 };
 const getWebRootPath = (fileName) => {
     return fileName
-        ? path__WEBPACK_IMPORTED_MODULE_1__["join"](getRootPath(), '../web-admin', fileName)
-        : path__WEBPACK_IMPORTED_MODULE_1__["join"](getRootPath(), '../web-admin');
+        ? path__WEBPACK_IMPORTED_MODULE_2__["join"](getRootPath(), '../web-admin', fileName)
+        : path__WEBPACK_IMPORTED_MODULE_2__["join"](getRootPath(), '../web-admin');
 };
 
 
@@ -1515,12 +1515,12 @@ module.exports = __webpack_require__(37);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
-/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(25);
-/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(http__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
-/* harmony import */ var _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
+/* harmony import */ var _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
+/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(25);
+/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(http__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3);
 /* harmony import */ var firebase_admin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4);
 /* harmony import */ var firebase_admin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(firebase_admin__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var actions_on_google__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(26);
@@ -1534,11 +1534,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const log = Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_3__["namedLog"])('Main');
-log.debug('Environment', _environments_environment__WEBPACK_IMPORTED_MODULE_2__[/* environment */ "a"]);
-const options = _environments_environment__WEBPACK_IMPORTED_MODULE_2__[/* environment */ "a"].production
+const log = Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_0__["namedLog"])('Main');
+log.debug('Environment', _environments_environment__WEBPACK_IMPORTED_MODULE_3__[/* environment */ "a"]);
+const options = _environments_environment__WEBPACK_IMPORTED_MODULE_3__[/* environment */ "a"].production
     ? Object(_utils_file__WEBPACK_IMPORTED_MODULE_10__[/* readFileAsJson */ "b"])('/data/options.json')
-    : _environments_environment__WEBPACK_IMPORTED_MODULE_2__[/* environment */ "a"].options;
+    : _environments_environment__WEBPACK_IMPORTED_MODULE_3__[/* environment */ "a"].options;
 log.debug('App options', options);
 const jwt = Object(_utils_file__WEBPACK_IMPORTED_MODULE_10__[/* readFileAsJson */ "b"])(options.googleJwtPath);
 
@@ -1552,16 +1552,16 @@ firebase_admin__WEBPACK_IMPORTED_MODULE_4__["initializeApp"]({
 
 
 
-const express = express__WEBPACK_IMPORTED_MODULE_0__;
+const express = express__WEBPACK_IMPORTED_MODULE_1__;
 const smarthomeApp = Object(actions_on_google__WEBPACK_IMPORTED_MODULE_5__["smarthome"])({
-    debug: !_environments_environment__WEBPACK_IMPORTED_MODULE_2__[/* environment */ "a"].production,
+    debug: !_environments_environment__WEBPACK_IMPORTED_MODULE_3__[/* environment */ "a"].production,
     key: options.firebase.apikey,
     jwt: jwt
 });
 const app = express();
 const port = 8088;
 const env = process.env;
-const token = env.HASSIO_TOKEN || _environments_environment__WEBPACK_IMPORTED_MODULE_2__[/* environment */ "a"].homeAssistaneApiKey;
+const token = env.HASSIO_TOKEN || _environments_environment__WEBPACK_IMPORTED_MODULE_3__[/* environment */ "a"].homeAssistaneApiKey;
 log.debug('Token', token);
 const supervisorToken = env.SUPERVISOR_TOKEN;
 log.debug('SupervisorToken', supervisorToken);
@@ -1575,10 +1575,10 @@ const argv = {
 };
 const dataAccess = new _app_data_access__WEBPACK_IMPORTED_MODULE_6__[/* DataAccess */ "a"](token, smarthomeApp);
 Object(_app_rest_server__WEBPACK_IMPORTED_MODULE_8__[/* createRestServer */ "a"])(app, dataAccess, token, supervisorToken);
-const server = http__WEBPACK_IMPORTED_MODULE_1__["createServer"](app);
+const server = http__WEBPACK_IMPORTED_MODULE_2__["createServer"](app);
 Object(_app_socket_server__WEBPACK_IMPORTED_MODULE_9__[/* createWebSocket */ "a"])(server, dataAccess);
 server.listen(port);
-if (_environments_environment__WEBPACK_IMPORTED_MODULE_2__[/* environment */ "a"].production) {
+if (_environments_environment__WEBPACK_IMPORTED_MODULE_3__[/* environment */ "a"].production) {
     Object(_app_discover_server__WEBPACK_IMPORTED_MODULE_7__[/* startUDPServer */ "a"])(argv);
 }
 

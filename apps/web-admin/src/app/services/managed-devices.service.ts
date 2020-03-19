@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
+  HomeAssistantDeviceInfoType,
   HomeAssistantDevicesType,
   HomeAssistantDeviceUpdatedType,
-  ManageDevicesType,
-  ServerMessage,
-  ManageDevicesUpdate,
   IManagedDeviceModel,
-  HomeAssistantDeviceInfoType,
-  ManageDevicesDelete
+  ManageDevicesDelete,
+  ManageDevicesType,
+  ManageDevicesUpdate,
+  ServerMessage
 } from '@nx-home-assistant/common';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { loadDeviceSummary } from '../+state/device-summary/device-summary.actions';
 import {
   loadDevicesSuccess,
   updateDevices
 } from '../+state/devices/devices.actions';
 import { loadManagedDevicesSuccess } from '../+state/managed-devices/managed-devices.actions';
 import { IRootState } from '../+state/store';
-import { loadDeviceSummary } from '../+state/device-summary/device-summary.actions';
 
 @Injectable({
   providedIn: 'root'

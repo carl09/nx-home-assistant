@@ -1,12 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Output,
   EventEmitter,
-  SimpleChanges,
-  OnInit,
+  Input,
   OnChanges,
-  Input
+  OnInit,
+  Output,
+  SimpleChanges
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import {
@@ -31,6 +31,7 @@ interface EntityGroup {
 @Component({
   selector: 'nx-home-assistant-managed-edit-form',
   templateUrl: './managed-edit-form.component.html',
+  styleUrls: ['./managed-edit-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManagedEditFormComponent implements OnInit, OnChanges {

@@ -1,19 +1,19 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  OnChanges,
   OnInit,
   SimpleChanges,
-  OnChanges,
 } from '@angular/core';
-import { Observable } from 'rxjs';
-import { FormGroup, FormControl } from '@angular/forms';
-import { deviceTypes, deviceTraits, IManagedDeviceModel } from '@nx-home-assistant/common';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Store, select } from '@ngrx/store';
-import { IRootState } from '../../+state/store';
-import { getDeviceList } from '../../+state/selectors';
+import { select, Store } from '@ngrx/store';
+import { deviceTraits, deviceTypes, IManagedDeviceModel } from '@nx-home-assistant/common';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { updateManagedDevicesRequest } from '../../+state/managed-devices/managed-devices.actions';
+import { getDeviceList } from '../../+state/selectors';
+import { IRootState } from '../../+state/store';
 
 interface Entity {
   text: string;

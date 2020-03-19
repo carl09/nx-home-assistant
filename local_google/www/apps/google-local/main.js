@@ -936,6 +936,12 @@ module.exports = require("http");
 
 /***/ }),
 /* 26 */
+/***/ (function(module, exports) {
+
+module.exports = require("actions-on-google");
+
+/***/ }),
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -948,7 +954,7 @@ module.exports = require("http");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(0);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3);
-/* harmony import */ var _home_assistant_server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(27);
+/* harmony import */ var _home_assistant_server__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(28);
 
 
 
@@ -1063,33 +1069,33 @@ class DataAccess {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeAssistantWebSocket; });
-/* harmony import */ var rxjs_webSocket__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(28);
-/* harmony import */ var rxjs_webSocket__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(rxjs_webSocket__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
-/* harmony import */ var _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var rxjs_webSocket__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(29);
+/* harmony import */ var rxjs_webSocket__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(rxjs_webSocket__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3);
 
 
 
 
-const log = Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_2__["namedLog"])('Home assistant Socket Client');
+const log = Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_0__["namedLog"])('Home assistant Socket Client');
 // tslint:disable-next-line
 global.WebSocket = __webpack_require__(12);
 class HomeAssistantWebSocket {
     constructor(url, token) {
         this.url = url;
         this.token = token;
-        this.homeAssistantResult = new rxjs__WEBPACK_IMPORTED_MODULE_3__["ReplaySubject"](1);
+        this.homeAssistantResult = new rxjs__WEBPACK_IMPORTED_MODULE_1__["ReplaySubject"](1);
         this.subscribedMessages = [];
     }
     initWebSocket() {
-        this.webSocketSubject = Object(rxjs_webSocket__WEBPACK_IMPORTED_MODULE_0__["webSocket"])({
+        this.webSocketSubject = Object(rxjs_webSocket__WEBPACK_IMPORTED_MODULE_2__["webSocket"])({
             url: this.url,
             closeObserver: {
                 next: (err) => {
@@ -1147,7 +1153,7 @@ class HomeAssistantWebSocket {
             log.error('Auth Error', msg.message);
             log.info('Token', {
                 token: this.token,
-                url: `${_environments_environment__WEBPACK_IMPORTED_MODULE_1__[/* environment */ "a"].homeAssistaneSocketUri}/websocket`
+                url: `${_environments_environment__WEBPACK_IMPORTED_MODULE_3__[/* environment */ "a"].homeAssistaneSocketUri}/websocket`
             });
         }
         else {
@@ -1158,28 +1164,28 @@ class HomeAssistantWebSocket {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = require("rxjs/webSocket");
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return startUDPServer; });
-/* harmony import */ var cbor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(30);
-/* harmony import */ var cbor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(cbor__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var dgram__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
-/* harmony import */ var dgram__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(dgram__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1);
+/* harmony import */ var _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var cbor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(31);
+/* harmony import */ var cbor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(cbor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var dgram__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(32);
+/* harmony import */ var dgram__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(dgram__WEBPACK_IMPORTED_MODULE_2__);
 
 
 
-const log = Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_2__["namedLog"])('UDP Service');
+const log = Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_0__["namedLog"])('UDP Service');
 const startUDPServer = (argv) => {
-    const socket = Object(dgram__WEBPACK_IMPORTED_MODULE_1__["createSocket"])('udp4');
+    const socket = Object(dgram__WEBPACK_IMPORTED_MODULE_2__["createSocket"])('udp4');
     // Handle discovery request.
     socket.on('message', (msg, rinfo) => {
         const discoveryPacket = Buffer.from(argv.udp_discovery_packet, 'hex');
@@ -1195,7 +1201,7 @@ const startUDPServer = (argv) => {
             isLocalOnly: true,
             isProxy: true
         };
-        const responsePacket = Object(cbor__WEBPACK_IMPORTED_MODULE_0__["encode"])(discoveryData);
+        const responsePacket = Object(cbor__WEBPACK_IMPORTED_MODULE_1__["encode"])(discoveryData);
         socket.send(responsePacket, rinfo.port, rinfo.address, error => {
             if (error !== null) {
                 log.error('failed to send ack:', error);
@@ -1212,19 +1218,19 @@ const startUDPServer = (argv) => {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 module.exports = require("cbor");
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = require("dgram");
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1234,15 +1240,15 @@ module.exports = require("dgram");
 /* harmony import */ var _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
 /* harmony import */ var body_parser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11);
 /* harmony import */ var body_parser__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(body_parser__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var cors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(33);
+/* harmony import */ var cors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(34);
 /* harmony import */ var cors__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(cors__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9);
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(0);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3);
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7);
-/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(0);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(3);
 /* harmony import */ var _utils_file__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6);
 
 
@@ -1257,13 +1263,13 @@ const log = Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_1__["named
 const express = express__WEBPACK_IMPORTED_MODULE_4__;
 const callLocalService = (token) => {
     return (domain, service, data) => {
-        return Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_1__["post"])(`${_environments_environment__WEBPACK_IMPORTED_MODULE_6__[/* environment */ "a"].homeAssistaneRestUri}/services/${domain}/${service}`, token, data);
+        return Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_1__["post"])(`${_environments_environment__WEBPACK_IMPORTED_MODULE_7__[/* environment */ "a"].homeAssistaneRestUri}/services/${domain}/${service}`, token, data);
     };
 };
 const createRestServer = (app, dataAccess, token, supervisorToken) => {
     dataAccess
         .getManagedDevices()
-        .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["take"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(x => {
+        .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["take"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(x => {
         return x.map(y => y.entityId);
     }))
         .toPromise()
@@ -1273,7 +1279,7 @@ const createRestServer = (app, dataAccess, token, supervisorToken) => {
     app.use(body_parser__WEBPACK_IMPORTED_MODULE_2__["urlencoded"]({ extended: true }));
     app.use(body_parser__WEBPACK_IMPORTED_MODULE_2__["json"]());
     app.use(body_parser__WEBPACK_IMPORTED_MODULE_2__["raw"]());
-    if (!_environments_environment__WEBPACK_IMPORTED_MODULE_6__[/* environment */ "a"].production) {
+    if (!_environments_environment__WEBPACK_IMPORTED_MODULE_7__[/* environment */ "a"].production) {
         app.use(cors__WEBPACK_IMPORTED_MODULE_3__());
     }
     app.get('/', (_req, res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(void 0, void 0, void 0, function* () {
@@ -1283,7 +1289,7 @@ const createRestServer = (app, dataAccess, token, supervisorToken) => {
             path: _req.path
         });
         const addonsInfo = yield Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_1__["get"])(`http://supervisor/addons/self/info`, supervisorToken || token);
-        const file = fs__WEBPACK_IMPORTED_MODULE_7__["readFileSync"](Object(_utils_file__WEBPACK_IMPORTED_MODULE_8__[/* getWebRootPath */ "a"])('index.html'), 'utf8');
+        const file = fs__WEBPACK_IMPORTED_MODULE_5__["readFileSync"](Object(_utils_file__WEBPACK_IMPORTED_MODULE_8__[/* getWebRootPath */ "a"])('index.html'), 'utf8');
         const data = file.replace(`<base href="/" />`, `<base href="${addonsInfo.ingress_url}" />`);
         res.writeHead(200, {
             'Content-Type': 'text/html'
@@ -1294,7 +1300,7 @@ const createRestServer = (app, dataAccess, token, supervisorToken) => {
     app.get('/api/devices', (_req, res) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(void 0, void 0, void 0, function* () {
         const devices = yield dataAccess
             .getManagedDevices()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["take"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(x => {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["take"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(x => {
             return x.map(y => y.entityId);
         }))
             .toPromise();
@@ -1316,7 +1322,7 @@ const createRestServer = (app, dataAccess, token, supervisorToken) => {
     app.use((_req, res, _next) => {
         const segments = _req.url.split('/');
         const fileName = segments[segments.length - 1];
-        if (fs__WEBPACK_IMPORTED_MODULE_7__["existsSync"](Object(_utils_file__WEBPACK_IMPORTED_MODULE_8__[/* getWebRootPath */ "a"])(fileName))) {
+        if (fs__WEBPACK_IMPORTED_MODULE_5__["existsSync"](Object(_utils_file__WEBPACK_IMPORTED_MODULE_8__[/* getWebRootPath */ "a"])(fileName))) {
             let contentType = 'text/html';
             if (fileName.endsWith('js')) {
                 contentType = 'text/javascript';
@@ -1327,7 +1333,7 @@ const createRestServer = (app, dataAccess, token, supervisorToken) => {
             res.writeHead(200, {
                 'Content-Type': contentType
             });
-            const file = fs__WEBPACK_IMPORTED_MODULE_7__["readFileSync"](Object(_utils_file__WEBPACK_IMPORTED_MODULE_8__[/* getWebRootPath */ "a"])(fileName), null);
+            const file = fs__WEBPACK_IMPORTED_MODULE_5__["readFileSync"](Object(_utils_file__WEBPACK_IMPORTED_MODULE_8__[/* getWebRootPath */ "a"])(fileName), null);
             res.write(file);
             res.end();
         }
@@ -1339,13 +1345,13 @@ const createRestServer = (app, dataAccess, token, supervisorToken) => {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports) {
 
 module.exports = require("cors");
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1353,13 +1359,13 @@ module.exports = require("cors");
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1);
-/* harmony import */ var ws__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(12);
-/* harmony import */ var ws__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ws__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(0);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _nx_home_assistant_data_access__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8);
+/* harmony import */ var _nx_home_assistant_data_access__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(rxjs__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(0);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var ws__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(12);
+/* harmony import */ var ws__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(ws__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
@@ -1389,22 +1395,22 @@ const isEq = (obj1 = {}, obj2 = {}) => {
     return false;
 };
 const createWebSocket = (server, dataAccess) => {
-    const wss = new ws__WEBPACK_IMPORTED_MODULE_2__["Server"]({ server, path: '/ws' });
-    Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["combineLatest"])([
+    const wss = new ws__WEBPACK_IMPORTED_MODULE_5__["Server"]({ server, path: '/ws' });
+    Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["combineLatest"])([
         dataAccess.getManagedDevices(),
         dataAccess.getEntityStatusUpdated()
     ])
-        .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["filter"])(([ids, update]) => ids.map(x => x.entityId).includes(update.entity_id)))
+        .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["filter"])(([ids, update]) => ids.map(x => x.entityId).includes(update.entity_id)))
         .subscribe(([managedDevices, device]) => {
         const managedDevice = managedDevices.find(x => x.entityId === device.entity_id);
         const update = Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_1__["createQueryDevice"])(managedDevice, device);
         if (!isEq(managedDevice.states, update)) {
-            Object(_nx_home_assistant_data_access__WEBPACK_IMPORTED_MODULE_5__[/* setDeviceStatus */ "c"])(managedDevice.id, update);
+            Object(_nx_home_assistant_data_access__WEBPACK_IMPORTED_MODULE_2__[/* setDeviceStatus */ "c"])(managedDevice.id, update);
             log.info('Updating Entity ', device.entity_id, managedDevice.id, update);
         }
     });
     wss.on('connection', (ws) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(void 0, void 0, void 0, function* () {
-        const subject$ = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
+        const subject$ = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();
         // connection is up, let's add a simple simple event
         ws.on('message', (message) => {
             const serverMessage = JSON.parse(message);
@@ -1424,7 +1430,7 @@ const createWebSocket = (server, dataAccess) => {
         });
         dataAccess
             .getManagedDevices()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(subject$))
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(subject$))
             .subscribe(manageDevices => {
             ws.send(JSON.stringify({
                 type: _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_1__["ManageDevicesType"],
@@ -1433,7 +1439,7 @@ const createWebSocket = (server, dataAccess) => {
         });
         dataAccess
             .getEntityStatus()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(subject$))
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(subject$))
             .subscribe(homeAssistantDevices => {
             ws.send(JSON.stringify({
                 type: _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_1__["HomeAssistantDevicesType"],
@@ -1442,19 +1448,19 @@ const createWebSocket = (server, dataAccess) => {
         });
         dataAccess
             .getEntityStatusUpdated()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(subject$))
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(subject$))
             .subscribe(homeAssistantDevices => {
             ws.send(JSON.stringify({
                 type: _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_1__["HomeAssistantDeviceUpdatedType"],
                 device: homeAssistantDevices
             }));
         });
-        Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["combineLatest"])([
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["combineLatest"])([
             dataAccess.getAreas(),
             dataAccess.getEntities(),
             dataAccess.getDevices()
         ])
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(subject$), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(([areas, entities, devices]) => {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(subject$), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(([areas, entities, devices]) => {
             const areasMap = (areas || []).reduce((acc, a) => {
                 acc[a.area_id] = a.name;
                 return acc;
@@ -1497,12 +1503,6 @@ const createWebSocket = (server, dataAccess) => {
 
 
 /***/ }),
-/* 35 */
-/***/ (function(module, exports) {
-
-module.exports = require("actions-on-google");
-
-/***/ }),
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1523,12 +1523,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
 /* harmony import */ var firebase_admin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4);
 /* harmony import */ var firebase_admin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(firebase_admin__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _app_data_access__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(26);
-/* harmony import */ var _app_discover_server__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(29);
-/* harmony import */ var _app_rest_server__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(32);
-/* harmony import */ var _app_socket_server__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(34);
-/* harmony import */ var actions_on_google__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(35);
-/* harmony import */ var actions_on_google__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(actions_on_google__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var actions_on_google__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(26);
+/* harmony import */ var actions_on_google__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(actions_on_google__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _app_data_access__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(27);
+/* harmony import */ var _app_discover_server__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(30);
+/* harmony import */ var _app_rest_server__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(33);
+/* harmony import */ var _app_socket_server__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(35);
 /* harmony import */ var _utils_file__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(6);
 
 
@@ -1553,7 +1553,7 @@ firebase_admin__WEBPACK_IMPORTED_MODULE_4__["initializeApp"]({
 
 
 const express = express__WEBPACK_IMPORTED_MODULE_0__;
-const smarthomeApp = Object(actions_on_google__WEBPACK_IMPORTED_MODULE_9__["smarthome"])({
+const smarthomeApp = Object(actions_on_google__WEBPACK_IMPORTED_MODULE_5__["smarthome"])({
     debug: !_environments_environment__WEBPACK_IMPORTED_MODULE_2__[/* environment */ "a"].production,
     key: options.firebase.apikey,
     jwt: jwt
@@ -1573,13 +1573,13 @@ const argv = {
     hardware_revision: '',
     firmware_revision: ''
 };
-const dataAccess = new _app_data_access__WEBPACK_IMPORTED_MODULE_5__[/* DataAccess */ "a"](token, smarthomeApp);
-Object(_app_rest_server__WEBPACK_IMPORTED_MODULE_7__[/* createRestServer */ "a"])(app, dataAccess, token, supervisorToken);
+const dataAccess = new _app_data_access__WEBPACK_IMPORTED_MODULE_6__[/* DataAccess */ "a"](token, smarthomeApp);
+Object(_app_rest_server__WEBPACK_IMPORTED_MODULE_8__[/* createRestServer */ "a"])(app, dataAccess, token, supervisorToken);
 const server = http__WEBPACK_IMPORTED_MODULE_1__["createServer"](app);
-Object(_app_socket_server__WEBPACK_IMPORTED_MODULE_8__[/* createWebSocket */ "a"])(server, dataAccess);
+Object(_app_socket_server__WEBPACK_IMPORTED_MODULE_9__[/* createWebSocket */ "a"])(server, dataAccess);
 server.listen(port);
 if (_environments_environment__WEBPACK_IMPORTED_MODULE_2__[/* environment */ "a"].production) {
-    Object(_app_discover_server__WEBPACK_IMPORTED_MODULE_6__[/* startUDPServer */ "a"])(argv);
+    Object(_app_discover_server__WEBPACK_IMPORTED_MODULE_7__[/* startUDPServer */ "a"])(argv);
 }
 
 

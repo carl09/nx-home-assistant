@@ -1,20 +1,20 @@
 import {
+  IHomeAssistantArea,
+  IHomeAssistantDevice,
+  IHomeAssistantEntity,
   IHomeAssistantEntityStatus,
   IManagedDeviceModel,
-  IHomeAssistantArea,
-  IHomeAssistantEntity,
-  IHomeAssistantDevice,
   namedLog
 } from '@nx-home-assistant/common';
 import {
+  deleteManagedDevice,
   getDevicesCallBack,
-  upsertManagedDevice,
-  deleteManagedDevice
+  upsertManagedDevice
 } from '@nx-home-assistant/data-access';
+import { SmartHomeApp } from 'actions-on-google';
 import { Observable, ReplaySubject } from 'rxjs';
 import { filter, map, shareReplay } from 'rxjs/operators';
 import { environment } from '../environments/environment';
-import { SmartHomeApp } from 'actions-on-google';
 import { HomeAssistantWebSocket, IMassageBase } from './home-assistant-server';
 
 const log = namedLog('Data Access');

@@ -1,12 +1,12 @@
-import { CallService, execute, get, post, namedLog } from '@nx-home-assistant/common';
+import { CallService, execute, get, namedLog, post } from '@nx-home-assistant/common';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express_ from 'express';
-import { take, map } from 'rxjs/operators';
-import { environment } from '../environments/environment';
-import { DataAccess } from './data-access';
 import * as fs from 'fs';
+import { map, take } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 import { getWebRootPath } from '../utils/file';
+import { DataAccess } from './data-access';
 
 const log = namedLog('Rest Service');
 const express = express_;

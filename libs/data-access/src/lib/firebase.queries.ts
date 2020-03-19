@@ -1,5 +1,5 @@
-import * as admin from 'firebase-admin';
 import { IManagedDeviceModel } from '@nx-home-assistant/common';
+import * as admin from 'firebase-admin';
 
 export const getDevicesAsync = async (): Promise<IManagedDeviceModel[]> => {
   const db = admin.firestore();

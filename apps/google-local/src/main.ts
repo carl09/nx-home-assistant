@@ -21,11 +21,11 @@ admin.initializeApp({
   databaseURL: options.firebase.databaseURL
 });
 
+import { smarthome, SmartHomeJwt } from 'actions-on-google';
 import { DataAccess } from './app/data-access';
 import { IUDPOptions, startUDPServer } from './app/discover-server';
 import { createRestServer } from './app/rest-server';
 import { createWebSocket } from './app/socket-server';
-import { smarthome, SmartHomeJwt } from 'actions-on-google';
 import { readFileAsJson } from './utils/file';
 
 

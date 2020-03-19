@@ -3,7 +3,7 @@ import * as functions from 'firebase-functions';
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-import { IManagedFirebaseModel, asyncForEach, IHomeAssistantEntityStatus } from '@nx-home-assistant/common';
+import { asyncForEach, IHomeAssistantEntityStatus, IManagedFirebaseModel } from '@nx-home-assistant/common';
 import {
   smarthome,
   SmartHomeV1ExecuteRequest,

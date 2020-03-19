@@ -43,13 +43,21 @@
       <input formControlName="localId" matInput placeholder="Local Device Id" />
     </mat-form-field>
   </div>
-  <button [disabled]="form.invalid" mat-stroked-button color="primary">
-    Save
-  </button>
-  <button mat-stroked-button type="button" (click)="onCancel()">
-    Cancel
-  </button>
-  <button *ngIf="device" mat-stroked-button type="button" (click)="onDelete()">
-    Delete
-  </button>
+  <div class="form-actions">
+    <button
+      *ngIf="device"
+      mat-stroked-button
+      type="button"
+      (click)="onDelete()"
+    >
+      Delete
+    </button>
+    <button mat-stroked-button type="button" (click)="onCancel()">
+      Cancel
+    </button>
+
+    <button [disabled]="form.invalid" mat-stroked-button color="primary">
+      Save
+    </button>
+  </div>
 </form>

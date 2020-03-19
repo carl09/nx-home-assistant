@@ -1,6 +1,6 @@
 import {
-  IHomeAssistantEntityStatus,
-  IHomeAssistantDeviceSummary
+  IHomeAssistantDeviceSummary,
+  IHomeAssistantEntityStatus
 } from './home-assistant-entity';
 import { IManagedDeviceModel } from './managed-device';
 

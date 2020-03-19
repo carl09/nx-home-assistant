@@ -1,8 +1,7 @@
+import { namedLog } from '@nx-home-assistant/common';
+import { ReplaySubject } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { environment } from '../environments/environment';
-import { namedLog } from '@nx-home-assistant/common';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
-import { retryWhen, tap, delay } from 'rxjs/operators';
 
 const log = namedLog('Home assistant Socket Client');
 

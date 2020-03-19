@@ -1,21 +1,21 @@
 import {
+  createQueryDevice,
+  HomeAssistantDeviceInfoType,
   HomeAssistantDevicesType,
   HomeAssistantDeviceUpdatedType,
-  ManageDevicesType,
   IHomeAssistantDevice,
-  HomeAssistantDeviceInfoType,
-  createQueryDevice,
-  ServerMessage,
+  ManageDevicesDeleteType,
+  ManageDevicesType,
   ManageDevicesUpdateType,
   namedLog,
-  ManageDevicesDeleteType
+  ServerMessage
 } from '@nx-home-assistant/common';
+import { setDeviceStatus } from '@nx-home-assistant/data-access';
 import * as http from 'http';
+import { combineLatest, Subject } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import * as WebSocket from 'ws';
 import { DataAccess } from './data-access';
-import { takeUntil, map, filter } from 'rxjs/operators';
-import { Subject, combineLatest } from 'rxjs';
-import { setDeviceStatus } from '@nx-home-assistant/data-access';
 
 const log = namedLog('Socket Service');
 

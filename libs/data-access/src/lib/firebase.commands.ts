@@ -1,5 +1,5 @@
-import * as admin from 'firebase-admin';
 import { DeviceStatus, IManagedDeviceModel } from '@nx-home-assistant/common';
+import * as admin from 'firebase-admin';
 
 export const setDeviceStatus = async (
   managedDeviceId: string,

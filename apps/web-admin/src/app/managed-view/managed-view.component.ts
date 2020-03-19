@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import {
   createQueryDevice,
@@ -10,9 +11,8 @@ import {
 } from '@nx-home-assistant/common';
 import { combineLatest, EMPTY, Observable } from 'rxjs';
 import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { IRootState } from '../+state/store';
 import { getDevice } from '../+state/selectors';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { IRootState } from '../+state/store';
 
 const log = namedLog('ManagedViewComponent');
 

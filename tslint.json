@@ -10,6 +10,7 @@
     "no-submodule-imports": false,
     "no-implicit-dependencies": false,
     "no-unused": true,
+    "no-console": false,
     "no-unused-expression": false,
     "no-var-before-return": true,
     "no-else-after-return": true,

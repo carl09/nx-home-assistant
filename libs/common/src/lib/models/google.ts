@@ -42,8 +42,8 @@ export interface CustomSmartHomeV1SyncDevices {
   attributes?: { [key: string]: any };
   customData?: { [key: string]: any };
   roomHint?: string;
-  otherDeviceIds?: {
+  otherDeviceIds?: Array<{
     agentId?: string;
     deviceId: string;
-  }[];
+  }>;
 }

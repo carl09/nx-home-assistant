@@ -1400,7 +1400,10 @@ const createWebSocket = (server, dataAccess) => {
         dataAccess.getManagedDevices(),
         dataAccess.getEntityStatusUpdated()
     ])
-        .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["filter"])(([ids, update]) => ids.map(x => x.entityId).includes(update.entity_id)))
+        .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["filter"])(([ids, update]) => ids.map(x => x.entityId).includes(update.entity_id)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(err => {
+        log.error('Device Filter Error', err);
+        throw new Error(`Error in filter: ${err}`);
+    }))
         .subscribe(([managedDevices, device]) => {
         const managedDevice = managedDevices.find(x => x.entityId === device.entity_id);
         const update = Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_1__["createQueryDevice"])(managedDevice, device);
@@ -1408,6 +1411,8 @@ const createWebSocket = (server, dataAccess) => {
             Object(_nx_home_assistant_data_access__WEBPACK_IMPORTED_MODULE_2__[/* setDeviceStatus */ "c"])(managedDevice.id, update);
             log.info('Updating Entity ', device.entity_id, managedDevice.id, update);
         }
+    }, err => {
+        log.error('Device Update Error', err);
     });
     wss.on('connection', (ws) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(void 0, void 0, void 0, function* () {
         const subject$ = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();

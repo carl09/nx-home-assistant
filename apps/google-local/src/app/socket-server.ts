@@ -13,7 +13,7 @@ import {
 import { setDeviceStatus } from '@nx-home-assistant/data-access';
 import * as http from 'http';
 import { combineLatest, Subject } from 'rxjs';
-import { filter, map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil, catchError } from 'rxjs/operators';
 import * as WebSocket from 'ws';
 import { DataAccess } from './data-access';
 
@@ -59,26 +59,35 @@ export const createWebSocket = (
     .pipe(
       filter(([ids, update]) =>
         ids.map(x => x.entityId).includes(update.entity_id)
-      )
+      ),
+      catchError(err => {
+        log.error('Device Filter Error', err);
+        throw new Error(`Error in filter: ${err}`);
+      })
     )
-    .subscribe(([managedDevices, device]) => {
-      const managedDevice = managedDevices.find(
-        x => x.entityId === device.entity_id
-      );
-
-      const update = createQueryDevice(managedDevice, device);
-
-      if (!isEq(managedDevice.states, update)) {
-        setDeviceStatus(managedDevice.id, update);
-
-        log.info(
-          'Updating Entity ',
-          device.entity_id,
-          managedDevice.id,
-          update
+    .subscribe(
+      ([managedDevices, device]) => {
+        const managedDevice = managedDevices.find(
+          x => x.entityId === device.entity_id
         );
+
+        const update = createQueryDevice(managedDevice, device);
+
+        if (!isEq(managedDevice.states, update)) {
+          setDeviceStatus(managedDevice.id, update);
+
+          log.info(
+            'Updating Entity ',
+            device.entity_id,
+            managedDevice.id,
+            update
+          );
+        }
+      },
+      err => {
+        log.error('Device Update Error', err);
       }
-    });
+    );
 
   wss.on('connection', async (ws: WebSocket) => {
     const subject$ = new Subject();

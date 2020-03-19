@@ -31,3 +31,12 @@ export const upsertManagedDevice = (managedDevice: IManagedDeviceModel) => {
     db.collection('devices').add(update);
   }
 };
+
+export const deleteManagedDevice = (id: string) => {
+  const db = admin.firestore();
+
+  return db
+    .collection('devices')
+    .doc(id)
+    .delete();
+};

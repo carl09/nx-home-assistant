@@ -7,7 +7,8 @@ import {
   ServerMessage,
   ManageDevicesUpdate,
   IManagedDeviceModel,
-  HomeAssistantDeviceInfoType
+  HomeAssistantDeviceInfoType,
+  ManageDevicesDelete
 } from '@nx-home-assistant/common';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import {
@@ -75,6 +76,15 @@ export class ManagedDevicesService {
     const massage: ManageDevicesUpdate = {
       type: 'firebase_update',
       update
+    };
+
+    this.webSocket.next(massage);
+  }
+
+  deleteManagedDevice(id: string) {
+    const massage: ManageDevicesDelete = {
+      type: 'firebase_delete',
+      id
     };
 
     this.webSocket.next(massage);

@@ -1,0 +1,55 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+  <div class="example-container">
+    <mat-form-field>
+      <input formControlName="name" matInput placeholder="name" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Entity</mat-label>
+      <mat-select formControlName="entityId">
+        <mat-option>--</mat-option>
+        <mat-optgroup
+          *ngFor="let group of entitiesGrouped"
+          [label]="group.name"
+        >
+          <mat-option
+            *ngFor="let entity of group.entities"
+            [value]="entity.value"
+          >
+            {{ entity.text }}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Device Type</mat-label>
+      <mat-select formControlName="deviceType">
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let entity of deviceTypes" [value]="entity.value">
+          {{ entity.text }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Traits</mat-label>
+      <mat-select formControlName="traits" multiple>
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let entity of deviceTraits" [value]="entity">
+          {{ entity }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input formControlName="localId" matInput placeholder="Local Device Id" />
+    </mat-form-field>
+  </div>
+  <button [disabled]="form.invalid" mat-stroked-button color="primary">
+    Save
+  </button>
+  <button mat-stroked-button type="button" (click)="onCancel()">
+    Cancel
+  </button>
+  <button *ngIf="device" mat-stroked-button type="button" (click)="onDelete()">
+    Delete
+  </button>
+</form>

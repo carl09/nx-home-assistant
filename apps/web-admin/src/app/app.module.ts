@@ -28,9 +28,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule, Routes } from '@angular/router';
 import { ManagedViewComponent } from './managed-view/managed-view.component';
 import { ManagedEditComponent } from './managed-edit/managed-edit.component';
+import { ManagedEditFormComponent } from './managed-edit/managed-edit-form/managed-edit-form.component';
 
 const appRoutes: Routes = [
   { path: '', component: ManagedComponent },
+  { path: 'list', component: ManagedComponent },
   { path: 'edit/:id', component: ManagedEditComponent },
   { path: 'view/:id', component: ManagedViewComponent },
   { path: 'home', component: HomeAssistantComponent }
@@ -44,7 +46,8 @@ const appRoutes: Routes = [
     ManagedViewComponent,
     JsonViewerComponent,
     ManagedEditComponent,
-    ManagedDialogComponent
+    ManagedDialogComponent,
+    ManagedEditFormComponent
   ],
   imports: [
     BrowserModule,

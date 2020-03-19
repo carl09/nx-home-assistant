@@ -7,7 +7,8 @@ import {
   createQueryDevice,
   ServerMessage,
   ManageDevicesUpdateType,
-  namedLog
+  namedLog,
+  ManageDevicesDeleteType
 } from '@nx-home-assistant/common';
 import * as http from 'http';
 import * as WebSocket from 'ws';
@@ -89,6 +90,10 @@ export const createWebSocket = (
       switch (serverMessage.type) {
         case ManageDevicesUpdateType: {
           dataAccess.upsertManagedDevice(serverMessage.update);
+          break;
+        }
+        case ManageDevicesDeleteType: {
+          dataAccess.deleteManagedDevice(serverMessage.id);
           break;
         }
         default:

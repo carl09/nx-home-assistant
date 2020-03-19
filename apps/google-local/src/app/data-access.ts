@@ -8,7 +8,8 @@ import {
 } from '@nx-home-assistant/common';
 import {
   getDevicesCallBack,
-  upsertManagedDevice
+  upsertManagedDevice,
+  deleteManagedDevice
 } from '@nx-home-assistant/data-access';
 import { Observable, ReplaySubject } from 'rxjs';
 import { filter, map, shareReplay } from 'rxjs/operators';
@@ -43,16 +44,12 @@ export class DataAccess {
   upsertManagedDevice(update: IManagedDeviceModel) {
     upsertManagedDevice(update);
 
-    if (this.googleHome) {
-      this.googleHome
-        .requestSync(globalAgentUserId)
-        .then(resp => {
-          log.info('[DataAccess] Google Home requestSync', resp);
-        })
-        .catch(err => {
-          log.error('[DataAccess] Google Home requestSync', err);
-        });
-    }
+    this.requestSync();
+  }
+
+  deleteManagedDevice(id: string) {
+    deleteManagedDevice(id).then(() => {});
+    this.requestSync();
   }
 
   getManagedDevices(): Observable<IManagedDeviceModel[]> {
@@ -172,5 +169,18 @@ export class DataAccess {
     return this.homeAssistantWebSocket
       .messages()
       .pipe(filter(x => x.id === resultId));
+  }
+
+  private requestSync() {
+    if (this.googleHome) {
+      this.googleHome
+        .requestSync(globalAgentUserId)
+        .then(resp => {
+          log.info('[DataAccess] Google Home requestSync', resp);
+        })
+        .catch(err => {
+          log.error('[DataAccess] Google Home requestSync', err);
+        });
+    }
   }
 }

@@ -10,6 +10,7 @@ export const HomeAssistantDeviceUpdatedType = 'device_updated';
 export const HomeAssistantDeviceInfoType = 'device_info';
 
 export const ManageDevicesUpdateType = 'firebase_update';
+export const ManageDevicesDeleteType = 'firebase_delete';
 
 export interface ManageDevices {
   type: 'firebase';
@@ -36,9 +37,15 @@ export interface ManageDevicesUpdate {
   update: IManagedDeviceModel;
 }
 
+export interface ManageDevicesDelete {
+  type: 'firebase_delete';
+  id: string;
+}
+
 export type ServerMessage =
   | ManageDevices
   | HomeAssistantDevices
   | HomeAssistantDeviceUpdated
   | HomeAssistantDeviceInfo
-  | ManageDevicesUpdate;
+  | ManageDevicesUpdate
+  | ManageDevicesDelete;

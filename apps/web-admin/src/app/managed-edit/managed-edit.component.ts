@@ -16,11 +16,15 @@ import {
   namedLog
 } from '@nx-home-assistant/common';
 import { Observable, EMPTY } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap, distinctUntilChanged } from 'rxjs/operators';
 import { IRootState } from '../+state/store';
 import { getDeviceList } from '../+state/selectors';
-import { updateManagedDevicesRequest } from '../+state/managed-devices/managed-devices.actions';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import {
+  updateManagedDevicesRequest,
+  deleteManagedDevicesRequest
+} from '../+state/managed-devices/managed-devices.actions';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { isEqual } from 'lodash';
 
 const log = namedLog('ManagedEditComponent');
 
@@ -41,18 +45,16 @@ interface EntityGroup {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManagedEditComponent implements OnInit, OnChanges {
-  @Output() cancel: EventEmitter<void> = new EventEmitter();
-
   device$: Observable<IManagedDeviceModel>;
   entitiesGrouped$: Observable<EntityGroup[]>;
-  deviceTypes: Entity[];
-  deviceTraits: string[];
-
-  deviceForm: FormGroup;
 
   private entityId$: Observable<string>;
 
-  constructor(private route: ActivatedRoute, private store: Store<IRootState>) {
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly store: Store<IRootState>,
+    private readonly router: Router
+  ) {
     this.entityId$ = this.route.params.pipe(
       map((params: ParamMap) => {
         log.info('entityId$', params);
@@ -70,17 +72,12 @@ export class ManagedEditComponent implements OnInit, OnChanges {
           );
         }
         return EMPTY;
-      }),
-      tap(x => {
-        if (x) {
-          this.updateFormValues(x);
-        }
-        log.info('device$', x);
       })
     );
 
     this.entitiesGrouped$ = this.store.pipe(
       select(x => getDeviceList(x.devices)),
+      distinctUntilChanged((x, y) => isEqual(x, y)),
       map(x => {
         const group: { [key: string]: EntityGroup } = {};
         x.forEach(y => {
@@ -100,61 +97,28 @@ export class ManagedEditComponent implements OnInit, OnChanges {
         return Object.keys(group).map(y => group[y]);
       })
     );
-
-    this.deviceTypes = deviceTypes.map(x => {
-      return {
-        value: x.code,
-        text: x.name
-      };
-    });
-
-    this.deviceTraits = deviceTraits;
   }
 
-  ngOnInit(): void {
-    this.deviceForm = new FormGroup({
-      name: new FormControl(''),
-      entityId: new FormControl(''),
-      deviceType: new FormControl(''),
-      localId: new FormControl(''),
-      traits: new FormControl()
-    });
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(_changes: SimpleChanges): void {}
 
-  public onSubmit() {
-    const device: IManagedDeviceModel = {
-      name: this.deviceForm.value.name,
-      localId: this.deviceForm.value.localId || '',
-      // uid: this.userService.currentUserId(),
-      entityId: this.deviceForm.value.entityId,
-      deviceType: this.deviceForm.value.deviceType,
-      traits: this.deviceForm.value.traits,
-      id: undefined, // this.id,
-      uid: undefined
-    };
-
-    const action = updateManagedDevicesRequest({ device });
+  public onSave(event: IManagedDeviceModel) {
+    log.info('[ManagedEditComponent] onSave', event);
+    const action = updateManagedDevicesRequest({ device: event });
     this.store.dispatch(action);
+    this.router.navigate(['list']);
   }
 
   public onCancel() {
     log.info('[ManagedEditComponent] onCancel');
-    this.cancel.emit();
+    this.router.navigate(['list']);
   }
 
-  private updateFormValues(device: IManagedDeviceModel) {
-    log.info('updateFormValues', device);
-
-    this.deviceForm.patchValue({
-      name: device.name,
-      entityId: device.entityId,
-      deviceType: device.deviceType,
-      localId: device.localId,
-      traits: device.traits
-    });
-
-    // this.deviceType = this.smartHomeService.getDeviceType(device.deviceType);
+  public onDelete(event) {
+    log.info('[ManagedEditComponent] onDelete', event);
+    const action = deleteManagedDevicesRequest({ id: event });
+    this.store.dispatch(action);
+    this.router.navigate(['list']);
   }
 }

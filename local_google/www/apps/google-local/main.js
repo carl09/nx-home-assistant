@@ -106,6 +106,8 @@ module.exports = require("rxjs/operators");
 
 /* harmony reexport (checked) */ if(__webpack_require__.o(_lib_models_home_assistant_entity__WEBPACK_IMPORTED_MODULE_1__, "HomeAssistantDevicesType")) __webpack_require__.d(__webpack_exports__, "HomeAssistantDevicesType", function() { return _lib_models_home_assistant_entity__WEBPACK_IMPORTED_MODULE_1__["HomeAssistantDevicesType"]; });
 
+/* harmony reexport (checked) */ if(__webpack_require__.o(_lib_models_home_assistant_entity__WEBPACK_IMPORTED_MODULE_1__, "ManageDevicesDeleteType")) __webpack_require__.d(__webpack_exports__, "ManageDevicesDeleteType", function() { return _lib_models_home_assistant_entity__WEBPACK_IMPORTED_MODULE_1__["ManageDevicesDeleteType"]; });
+
 /* harmony reexport (checked) */ if(__webpack_require__.o(_lib_models_home_assistant_entity__WEBPACK_IMPORTED_MODULE_1__, "ManageDevicesType")) __webpack_require__.d(__webpack_exports__, "ManageDevicesType", function() { return _lib_models_home_assistant_entity__WEBPACK_IMPORTED_MODULE_1__["ManageDevicesType"]; });
 
 /* harmony reexport (checked) */ if(__webpack_require__.o(_lib_models_home_assistant_entity__WEBPACK_IMPORTED_MODULE_1__, "ManageDevicesUpdateType")) __webpack_require__.d(__webpack_exports__, "ManageDevicesUpdateType", function() { return _lib_models_home_assistant_entity__WEBPACK_IMPORTED_MODULE_1__["ManageDevicesUpdateType"]; });
@@ -126,6 +128,8 @@ module.exports = require("rxjs/operators");
 
 /* harmony reexport (checked) */ if(__webpack_require__.o(_lib_models_managed_device__WEBPACK_IMPORTED_MODULE_2__, "HomeAssistantDevicesType")) __webpack_require__.d(__webpack_exports__, "HomeAssistantDevicesType", function() { return _lib_models_managed_device__WEBPACK_IMPORTED_MODULE_2__["HomeAssistantDevicesType"]; });
 
+/* harmony reexport (checked) */ if(__webpack_require__.o(_lib_models_managed_device__WEBPACK_IMPORTED_MODULE_2__, "ManageDevicesDeleteType")) __webpack_require__.d(__webpack_exports__, "ManageDevicesDeleteType", function() { return _lib_models_managed_device__WEBPACK_IMPORTED_MODULE_2__["ManageDevicesDeleteType"]; });
+
 /* harmony reexport (checked) */ if(__webpack_require__.o(_lib_models_managed_device__WEBPACK_IMPORTED_MODULE_2__, "ManageDevicesType")) __webpack_require__.d(__webpack_exports__, "ManageDevicesType", function() { return _lib_models_managed_device__WEBPACK_IMPORTED_MODULE_2__["ManageDevicesType"]; });
 
 /* harmony reexport (checked) */ if(__webpack_require__.o(_lib_models_managed_device__WEBPACK_IMPORTED_MODULE_2__, "ManageDevicesUpdateType")) __webpack_require__.d(__webpack_exports__, "ManageDevicesUpdateType", function() { return _lib_models_managed_device__WEBPACK_IMPORTED_MODULE_2__["ManageDevicesUpdateType"]; });
@@ -145,6 +149,8 @@ module.exports = require("rxjs/operators");
 /* harmony reexport (checked) */ if(__webpack_require__.o(_lib_models_google__WEBPACK_IMPORTED_MODULE_3__, "HomeAssistantDeviceUpdatedType")) __webpack_require__.d(__webpack_exports__, "HomeAssistantDeviceUpdatedType", function() { return _lib_models_google__WEBPACK_IMPORTED_MODULE_3__["HomeAssistantDeviceUpdatedType"]; });
 
 /* harmony reexport (checked) */ if(__webpack_require__.o(_lib_models_google__WEBPACK_IMPORTED_MODULE_3__, "HomeAssistantDevicesType")) __webpack_require__.d(__webpack_exports__, "HomeAssistantDevicesType", function() { return _lib_models_google__WEBPACK_IMPORTED_MODULE_3__["HomeAssistantDevicesType"]; });
+
+/* harmony reexport (checked) */ if(__webpack_require__.o(_lib_models_google__WEBPACK_IMPORTED_MODULE_3__, "ManageDevicesDeleteType")) __webpack_require__.d(__webpack_exports__, "ManageDevicesDeleteType", function() { return _lib_models_google__WEBPACK_IMPORTED_MODULE_3__["ManageDevicesDeleteType"]; });
 
 /* harmony reexport (checked) */ if(__webpack_require__.o(_lib_models_google__WEBPACK_IMPORTED_MODULE_3__, "ManageDevicesType")) __webpack_require__.d(__webpack_exports__, "ManageDevicesType", function() { return _lib_models_google__WEBPACK_IMPORTED_MODULE_3__["ManageDevicesType"]; });
 
@@ -174,9 +180,11 @@ module.exports = require("rxjs/operators");
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HomeAssistantDevicesType", function() { return _lib_models_server_messages__WEBPACK_IMPORTED_MODULE_7__["c"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ManageDevicesType", function() { return _lib_models_server_messages__WEBPACK_IMPORTED_MODULE_7__["d"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ManageDevicesDeleteType", function() { return _lib_models_server_messages__WEBPACK_IMPORTED_MODULE_7__["d"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ManageDevicesUpdateType", function() { return _lib_models_server_messages__WEBPACK_IMPORTED_MODULE_7__["e"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ManageDevicesType", function() { return _lib_models_server_messages__WEBPACK_IMPORTED_MODULE_7__["e"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ManageDevicesUpdateType", function() { return _lib_models_server_messages__WEBPACK_IMPORTED_MODULE_7__["f"]; });
 
 /* harmony import */ var _utils_logging__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(22);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "namedLog", function() { return _utils_logging__WEBPACK_IMPORTED_MODULE_8__["a"]; });
@@ -267,12 +275,14 @@ module.exports = require("fs");
 
 "use strict";
 /* harmony import */ var _lib_firebase_queries__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(23);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _lib_firebase_queries__WEBPACK_IMPORTED_MODULE_0__["a"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "b", function() { return _lib_firebase_queries__WEBPACK_IMPORTED_MODULE_0__["a"]; });
 
 /* harmony import */ var _lib_firebase_commands__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(24);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "b", function() { return _lib_firebase_commands__WEBPACK_IMPORTED_MODULE_1__["a"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _lib_firebase_commands__WEBPACK_IMPORTED_MODULE_1__["a"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "c", function() { return _lib_firebase_commands__WEBPACK_IMPORTED_MODULE_1__["b"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "d", function() { return _lib_firebase_commands__WEBPACK_IMPORTED_MODULE_1__["c"]; });
 
 
 
@@ -746,16 +756,18 @@ const post = (url, token, body) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return ManageDevicesType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return ManageDevicesType; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return HomeAssistantDevicesType; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return HomeAssistantDeviceUpdatedType; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeAssistantDeviceInfoType; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return ManageDevicesUpdateType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return ManageDevicesUpdateType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return ManageDevicesDeleteType; });
 const ManageDevicesType = 'firebase';
 const HomeAssistantDevicesType = 'device_list';
 const HomeAssistantDeviceUpdatedType = 'device_updated';
 const HomeAssistantDeviceInfoType = 'device_info';
 const ManageDevicesUpdateType = 'firebase_update';
+const ManageDevicesDeleteType = 'firebase_delete';
 
 
 /***/ }),
@@ -875,8 +887,9 @@ const getDevicesCallBack = (callback) => Object(tslib__WEBPACK_IMPORTED_MODULE_0
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return setDeviceStatus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return upsertManagedDevice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return setDeviceStatus; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return upsertManagedDevice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return deleteManagedDevice; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var firebase_admin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
@@ -905,6 +918,13 @@ const upsertManagedDevice = (managedDevice) => {
     else {
         db.collection('devices').add(update);
     }
+};
+const deleteManagedDevice = (id) => {
+    const db = firebase_admin__WEBPACK_IMPORTED_MODULE_1__["firestore"]();
+    return db
+        .collection('devices')
+        .doc(id)
+        .delete();
 };
 
 
@@ -945,17 +965,12 @@ class DataAccess {
         this.homeAssistantWebSocket = new _home_assistant_server__WEBPACK_IMPORTED_MODULE_5__[/* HomeAssistantWebSocket */ "a"](`${_environments_environment__WEBPACK_IMPORTED_MODULE_4__[/* environment */ "a"].homeAssistaneSocketUri}/websocket`, token);
     }
     upsertManagedDevice(update) {
-        Object(_nx_home_assistant_data_access__WEBPACK_IMPORTED_MODULE_1__[/* upsertManagedDevice */ "c"])(update);
-        if (this.googleHome) {
-            this.googleHome
-                .requestSync(globalAgentUserId)
-                .then(resp => {
-                log.info('[DataAccess] Google Home requestSync', resp);
-            })
-                .catch(err => {
-                log.error('[DataAccess] Google Home requestSync', err);
-            });
-        }
+        Object(_nx_home_assistant_data_access__WEBPACK_IMPORTED_MODULE_1__[/* upsertManagedDevice */ "d"])(update);
+        this.requestSync();
+    }
+    deleteManagedDevice(id) {
+        Object(_nx_home_assistant_data_access__WEBPACK_IMPORTED_MODULE_1__[/* deleteManagedDevice */ "a"])(id).then(() => { });
+        this.requestSync();
     }
     getManagedDevices() {
         if (!this.fireBase) {
@@ -1022,7 +1037,7 @@ class DataAccess {
     }
     initFireBase() {
         this.fireBase = new rxjs__WEBPACK_IMPORTED_MODULE_2__["ReplaySubject"](1);
-        Object(_nx_home_assistant_data_access__WEBPACK_IMPORTED_MODULE_1__[/* getDevicesCallBack */ "a"])(d => {
+        Object(_nx_home_assistant_data_access__WEBPACK_IMPORTED_MODULE_1__[/* getDevicesCallBack */ "b"])(d => {
             this.fireBase.next(d);
         });
     }
@@ -1031,6 +1046,18 @@ class DataAccess {
         return this.homeAssistantWebSocket
             .messages()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["filter"])(x => x.id === resultId));
+    }
+    requestSync() {
+        if (this.googleHome) {
+            this.googleHome
+                .requestSync(globalAgentUserId)
+                .then(resp => {
+                log.info('[DataAccess] Google Home requestSync', resp);
+            })
+                .catch(err => {
+                log.error('[DataAccess] Google Home requestSync', err);
+            });
+        }
     }
 }
 
@@ -1372,7 +1399,7 @@ const createWebSocket = (server, dataAccess) => {
         const managedDevice = managedDevices.find(x => x.entityId === device.entity_id);
         const update = Object(_nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_1__["createQueryDevice"])(managedDevice, device);
         if (!isEq(managedDevice.states, update)) {
-            Object(_nx_home_assistant_data_access__WEBPACK_IMPORTED_MODULE_5__[/* setDeviceStatus */ "b"])(managedDevice.id, update);
+            Object(_nx_home_assistant_data_access__WEBPACK_IMPORTED_MODULE_5__[/* setDeviceStatus */ "c"])(managedDevice.id, update);
             log.info('Updating Entity ', device.entity_id, managedDevice.id, update);
         }
     });
@@ -1384,6 +1411,10 @@ const createWebSocket = (server, dataAccess) => {
             switch (serverMessage.type) {
                 case _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_1__["ManageDevicesUpdateType"]: {
                     dataAccess.upsertManagedDevice(serverMessage.update);
+                    break;
+                }
+                case _nx_home_assistant_common__WEBPACK_IMPORTED_MODULE_1__["ManageDevicesDeleteType"]: {
+                    dataAccess.deleteManagedDevice(serverMessage.id);
                     break;
                 }
                 default:

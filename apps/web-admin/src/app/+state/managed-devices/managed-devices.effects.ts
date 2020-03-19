@@ -32,6 +32,17 @@ export class ManagedDevicesEffects {
     { dispatch: false }
   );
 
+  deleteManagedDevice$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ManagedDevicesActions.deleteManagedDevicesRequest),
+        tap(action => {
+          this.managedDevicesService.deleteManagedDevice(action.id);
+        })
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private managedDevicesService: ManagedDevicesService,

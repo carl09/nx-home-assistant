@@ -5,6 +5,7 @@ import {
 } from './devices/devices.reducer';
 import { managedDevicesAdapter } from './managed-devices/managed-devices.reducer';
 import { IRootState } from './store';
+import { sortBy } from 'lodash';
 
 export const getDevicesState = (state: IRootState) => state.devices;
 
@@ -28,6 +29,11 @@ export const getManagedDevice = createSelector(
 export const getAllManagedDevices = createSelector(
   managedDevicesSelectAll,
   state => state
+);
+
+export const getAllManagedDevicesSorted = createSelector(
+  getAllManagedDevices,
+  state => sortBy(state, x => x.name)
 );
 
 export const getDeviceList = createSelector(selectAll, state => {

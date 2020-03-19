@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { IManagedDeviceModel, namedLog } from '@nx-home-assistant/common';
 import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
-import { getAllManagedDevices } from '../+state/selectors';
+import { getAllManagedDevices, getAllManagedDevicesSorted } from '../+state/selectors';
 import { IRootState } from '../+state/store';
 import { MatDialog } from '@angular/material/dialog';
 import { ManagedDialogComponent } from './managed-dialog/managed-dialog.component';
@@ -28,7 +28,7 @@ export class ManagedComponent implements OnInit {
 
   constructor(private store: Store<IRootState>, public dialog: MatDialog) {
     this.devices$ = this.store
-      .select(x => getAllManagedDevices(x.managedDevices))
+      .select(x => getAllManagedDevicesSorted(x.managedDevices))
       .pipe(
         map(x => {
           return x.map(d => {

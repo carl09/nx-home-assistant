@@ -11,6 +11,13 @@ export const updateManagedDevicesRequest = createAction(
   props<{ device: IManagedDeviceModel }>()
 );
 
+
+export const deleteManagedDevicesRequest = createAction(
+  '[Managed Devices] Delete Managed Devices Request',
+  props<{ id: string }>()
+);
+
+
 export const managedDevicesSelected = createAction(
   '[Devices] Managed Devices Selected',
   props<{ id: string }>()

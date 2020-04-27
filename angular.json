@@ -22,8 +22,16 @@
             "tsConfig": "apps/web-admin/tsconfig.app.json",
             "aot": true,
             "assets": [
-              { "glob": "**/*", "input": "./assets/", "output": "./assets/" },
-              { "glob": "favicon.ico", "input": "./", "output": "./" },
+              {
+                "glob": "**/*",
+                "input": "./assets/",
+                "output": "./assets/"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "./",
+                "output": "./"
+              },
               {
                 "glob": "mdi.svg",
                 "input": "./node_modules/@mdi/angular-material",
@@ -125,7 +133,8 @@
                 "input": "apps/google-local/src/assets/",
                 "output": "./assets/"
               }
-            ]
+            ],
+            "buildLibsFromSource": true
           },
           "configurations": {
             "production": {
@@ -183,7 +192,8 @@
             "outputPath": "dist/apps/functions",
             "main": "apps/functions/src/main.ts",
             "tsConfig": "apps/functions/tsconfig.app.json",
-            "assets": ["apps/functions/src/assets"]
+            "assets": ["apps/functions/src/assets"],
+            "buildLibsFromSource": true
           },
           "configurations": {
             "production": {
@@ -242,7 +252,8 @@
               "apps/google-agent/src/assets",
               "apps/google-agent/src/index.html"
             ],
-            "externalDependencies": "none"
+            "externalDependencies": "none",
+            "buildLibsFromSource": true
           },
           "configurations": {
             "production": {

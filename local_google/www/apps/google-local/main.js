@@ -654,8 +654,8 @@ commandMap['action.devices.commands.OnOff'] = (callService, entityId, parms) => 
         });
         if (on) {
             yield callService('climate', 'set_hvac_mode', {
-                entity_id: entityId
-                // hvac_mode: state.thermostatMode
+                entity_id: entityId,
+                hvac_mode: 'heat' // needs last mode
             });
         }
     }

@@ -4,6 +4,12 @@ export type CallService = (
   data: { [key: string]: string }
 ) => Promise<any>;
 
+interface CommandResult {
+  ids: string[];
+  status: string;
+  states: any;
+}
+
 const commandMap: {
   [command: string]: (
     callService: CallService,
@@ -11,32 +17,14 @@ const commandMap: {
     parms: {
       [key: string]: any;
     }
-  ) => Promise<any>;
+  ) => Promise<CommandResult>;
 } = {};
 
-const createCommand = (id: string, status: any): any => ({
+const createCommand = (id: string, status: any): CommandResult => ({
   ids: [id],
   status: 'SUCCESS',
   states: status
 });
-
-commandMap['action.devices.commands.OnOff'] = async (
-  _callService: CallService,
-  entityId: string,
-  _parms: {
-    [key: string]: any;
-  }
-): Promise<any> => {
-  const xxx = createCommand(entityId, {
-    // cameraStreamAccessUrl:
-    //   'http://192.168.10.80:8080/stream/e34a63e9-f109-48e0-a352-b679a403a553/index.m3u8'
-    cameraStreamAccessUrl: 'http://192.168.10.80:8090/help.m3u8'
-  });
-
-  console.warn('Showing Camera GetCameraStream', xxx);
-
-  return Promise.resolve(xxx);
-};
 
 commandMap['action.devices.commands.OnOff'] = async (
   callService: CallService,
@@ -76,7 +64,7 @@ commandMap['action.devices.commands.ThermostatSetMode'] = async (
   parms: {
     [key: string]: any;
   }
-): Promise<any> => {
+): Promise<CommandResult> => {
   const thermostatMode = parms.thermostatMode;
 
   await callService('climate', 'set_hvac_mode', {
@@ -95,7 +83,7 @@ commandMap['action.devices.commands.ThermostatTemperatureSetpoint'] = async (
   parms: {
     [key: string]: any;
   }
-): Promise<any> => {
+): Promise<CommandResult> => {
   const thermostatTemperatureSetpoint = parms.thermostatTemperatureSetpoint;
   // const state = await getDeviceStatus(deviceId);
 
@@ -117,7 +105,7 @@ export const execute = (
   parms: {
     [key: string]: any;
   }
-) => {
+): Promise<CommandResult> => {
   if (cmd in commandMap) {
     return commandMap[cmd](callService, entityId, parms);
   }

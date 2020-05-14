@@ -645,15 +645,6 @@ const createCommand = (id, status) => ({
     status: 'SUCCESS',
     states: status
 });
-commandMap['action.devices.commands.OnOff'] = (_callService, entityId, _parms) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(void 0, void 0, void 0, function* () {
-    const xxx = createCommand(entityId, {
-        // cameraStreamAccessUrl:
-        //   'http://192.168.10.80:8080/stream/e34a63e9-f109-48e0-a352-b679a403a553/index.m3u8'
-        cameraStreamAccessUrl: 'http://192.168.10.80:8090/help.m3u8'
-    });
-    console.warn('Showing Camera GetCameraStream', xxx);
-    return Promise.resolve(xxx);
-});
 commandMap['action.devices.commands.OnOff'] = (callService, entityId, parms) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(void 0, void 0, void 0, function* () {
     // const state = await getDeviceStatus(deviceId);
     const on = parms.on;
@@ -738,6 +729,7 @@ const get = (url, token) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter
 });
 const post = (url, token, body) => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(void 0, void 0, void 0, function* () {
     const var1 = JSON.stringify(body);
+    console.log('post url:', url);
     console.log('post body:', var1);
     const res = yield axios__WEBPACK_IMPORTED_MODULE_1___default()(url, {
         method: 'post',

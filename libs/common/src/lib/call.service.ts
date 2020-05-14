@@ -28,6 +28,7 @@ export const post = async <T>(
 ) => {
   const var1 = JSON.stringify(body);
 
+  console.log('post url:', url);
   console.log('post body:', var1);
 
   const res = await axios(url, {

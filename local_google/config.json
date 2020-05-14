@@ -1,6 +1,6 @@
 {
   "name": "Google Home",
-  "version": "1.86",
+  "version": "1.87",
   "slug": "google_home_local",
   "description": "Google Home to Home Assistant manager",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],

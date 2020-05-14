@@ -60,9 +60,10 @@ export const createWebSocket = (
       filter(([ids, update]) =>
         ids.map(x => x.entityId).includes(update.entity_id)
       ),
-      catchError(err => {
+      catchError((err, caught) => {
         log.error('Device Filter Error', err);
-        throw new Error(`Error in filter: ${err}`);
+        // throw new Error(`Error in filter: ${err}`);
+        return caught;
       })
     )
     .subscribe(

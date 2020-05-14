@@ -1392,9 +1392,10 @@ const createWebSocket = (server, dataAccess) => {
         dataAccess.getManagedDevices(),
         dataAccess.getEntityStatusUpdated()
     ])
-        .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["filter"])(([ids, update]) => ids.map(x => x.entityId).includes(update.entity_id)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(err => {
+        .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["filter"])(([ids, update]) => ids.map(x => x.entityId).includes(update.entity_id)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])((err, caught) => {
         log.error('Device Filter Error', err);
-        throw new Error(`Error in filter: ${err}`);
+        // throw new Error(`Error in filter: ${err}`);
+        return caught;
     }))
         .subscribe(([managedDevices, device]) => {
         const managedDevice = managedDevices.find(x => x.entityId === device.entity_id);

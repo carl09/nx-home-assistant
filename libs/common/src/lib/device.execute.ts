@@ -48,7 +48,10 @@ commandMap['action.devices.commands.OnOff'] = async (
       });
     }
   } else {
-    await callService('switch', on ? 'turn_on' : 'turn_off', {
+
+    const [domain] = entityId.split('.');
+
+    await callService(domain || 'switch', on ? 'turn_on' : 'turn_off', {
       entity_id: entityId
     });
   }

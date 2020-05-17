@@ -660,7 +660,8 @@ commandMap['action.devices.commands.OnOff'] = (callService, entityId, parms) => 
         }
     }
     else {
-        yield callService('switch', on ? 'turn_on' : 'turn_off', {
+        const [domain] = entityId.split('.');
+        yield callService(domain || 'switch', on ? 'turn_on' : 'turn_off', {
             entity_id: entityId
         });
     }

@@ -118,7 +118,7 @@ const syncTemperatureSetting = (
   entity: IHomeAssistantEntityStatus
 ): any => {
   const defaultResult = {
-    availableThermostatModes: 'heat,cool',
+    availableThermostatModes: 'heat,cool,off',
     thermostatTemperatureUnit: 'C',
     commandOnlyTemperatureSetting: false,
     queryOnlyTemperatureSetting: false

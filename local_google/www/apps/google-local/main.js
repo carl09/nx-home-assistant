@@ -394,7 +394,7 @@ const syncFanSpeed = (_device, entity) => {
 };
 const syncTemperatureSetting = (_device, entity) => {
     const defaultResult = {
-        availableThermostatModes: 'heat,cool',
+        availableThermostatModes: 'heat,cool,off',
         thermostatTemperatureUnit: 'C',
         commandOnlyTemperatureSetting: false,
         queryOnlyTemperatureSetting: false

@@ -107,8 +107,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/web-admin/jest.config.js",
-            "tsConfig": "apps/web-admin/tsconfig.spec.json",
-            "setupFile": "apps/web-admin/src/test-setup.ts",
             "passWithNoTests": true
           }
         }
@@ -173,7 +171,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/google-local/jest.config.js",
-            "tsConfig": "apps/google-local/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }
@@ -229,7 +226,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/functions/jest.config.js",
-            "tsConfig": "apps/functions/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }
@@ -289,7 +285,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/google-agent/jest.config.js",
-            "tsConfig": "apps/google-agent/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }
@@ -315,7 +310,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/common/jest.config.js",
-            "tsConfig": "libs/common/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }
@@ -341,7 +335,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/data-access/jest.config.js",
-            "tsConfig": "libs/data-access/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }

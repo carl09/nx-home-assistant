@@ -278,9 +278,6 @@ licenses; we recommend you read them, as their terms may differ from the
 terms above.
 
 
-nx-home-assistant
-MIT
-
 regenerator-runtime
 MIT
 MIT License

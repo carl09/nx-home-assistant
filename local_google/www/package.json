@@ -11,12 +11,12 @@
     "tslib": "^2.1.0",
     "body-parser": "^1.19.0",
     "axios": "^0.21.1",
-    "cbor": "^5.2.0",
+    "cbor": "^7.0.5",
     "express": "^4.17.1",
     "firebase-admin": "^9.4.2",
-    "ws": "^7.4.2",
+    "ws": "^7.4.5",
     "cors": "^2.8.5",
-    "rxjs": "^6.6.3",
+    "rxjs": "^6.6.7",
     "actions-on-google": "^2.13.0"
   },
   "devDependencies": {}

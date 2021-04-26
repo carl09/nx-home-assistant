@@ -4,6 +4,6 @@ node -v
 
 cd /www
 
-npm i
+npm ci
 
 npm start

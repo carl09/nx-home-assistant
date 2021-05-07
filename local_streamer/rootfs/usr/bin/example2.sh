@@ -17,8 +17,13 @@ main() {
         bashio::log.info "---"
         # bashio::log.info $i
         # bashio::log.info $i | jq '.endpoint'
-        bashio::log.info $(jq --raw-output '.endpoint' $i)
+        bashio::log.info "$i" | jq '.url'
+        bashio::log.info "++"
+
+        endpoint=$("$i" | jq -r '.endpoint')
+        bashio::log.info $endpoint
         bashio::log.info ""
+
         bashio::log.info "****"
     done
 

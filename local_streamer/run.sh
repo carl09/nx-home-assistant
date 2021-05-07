@@ -2,4 +2,6 @@
 
 ls -la
  
-# echo "Starting stream"
+ls -la /usr
+
+ls -la /usr/bin

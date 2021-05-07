@@ -8,11 +8,11 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY rootfs /
 
 COPY startup.sh /
-COPY startup.py /
+COPY run.sh /
 COPY create_ffmpeg_cmd.sh /
 
 RUN chmod a+x /startup.sh
-RUN chmod a+x /startup.py
+RUN chmod a+x /run.sh
 RUN chmod a+x /create_ffmpeg_cmd.sh
 
-# CMD [ "/startup.sh" ]
+CMD [ "/run.sh" ]

@@ -15,6 +15,7 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 # CMD [ "/startup.sh" ]
 
 COPY startup.sh /
+COPY startup.py /
 COPY create_ffmpeg_cmd.sh /
 
 RUN chmod a+x /startup.sh

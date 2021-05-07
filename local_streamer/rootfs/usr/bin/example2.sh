@@ -7,7 +7,7 @@
 main() {
     bashio::log.trace "Hello"
 
-    streams=$(bashio: : config 'streams')
+    streams=$(bashio::config 'streams')
     bashio::log.info "Seconds between each quotes is set to: ${streams}"
 
     bashio::log.info "Starting ${OUT} stream"

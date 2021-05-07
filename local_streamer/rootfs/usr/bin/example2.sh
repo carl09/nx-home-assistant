@@ -28,6 +28,8 @@ main() {
         bashio::log.info $endpoint
         bashio::log.info ""
 
+        ffmpeg -rtsp_transport tcp -i $url -f lavfi -i aevalsrc=0 -acodec aac -vcodec copy -hls_list_size 2 -hls_init_time 1 -hls_time 1 -hls_flags delete_segments /tmp/stream/$endpoint.m3u8
+
         bashio::log.info "****"
     done
 

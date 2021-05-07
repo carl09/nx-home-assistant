@@ -5,16 +5,16 @@
 # Example add-on for Home Assistant.
 # ------------------------------------------------------------------------------
 main() {
-    bashio:: log.trace "Hello"
+    bashio::log.trace "Hello"
 
-    streams =$(bashio: : config 'streams')
-    bashio:: log.info "Seconds between each quotes is set to: ${streams}"
+    streams=$(bashio: : config 'streams')
+    bashio::log.info "Seconds between each quotes is set to: ${streams}"
 
-    bashio:: log.info "Starting ${OUT} stream"
+    bashio::log.info "Starting ${OUT} stream"
 
     for i in streams
     do
-        bashio:: log.info $i
+        bashio::log.info $i
     done
 
     # $(sh ./create_ffmpeg_cmd.sh "rtsp://192.168.10.74:554/h264" help) &

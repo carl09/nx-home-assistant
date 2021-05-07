@@ -16,7 +16,8 @@ main() {
     do
         bashio::log.info "---"
         # bashio::log.info $i
-        bashio::log.info $i | jq '.endpoint'
+        # bashio::log.info $i | jq '.endpoint'
+        bashio::log.info $i['endpoint']
         bashio::log.info ""
         bashio::log.info "****"
     done

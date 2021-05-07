@@ -15,4 +15,4 @@ RUN chmod a+x /startup.sh
 RUN chmod a+x /run.sh
 RUN chmod a+x /create_ffmpeg_cmd.sh
 
-CMD [ "/run.sh" ]
+# CMD [ "/run.sh" ]

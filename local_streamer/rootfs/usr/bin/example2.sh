@@ -12,6 +12,8 @@ main() {
 
     bashio::log.info "Starting stream"
 
+    endpoint=""
+
     for i in ${streams};
     do
         bashio::log.info "---"

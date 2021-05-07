@@ -14,7 +14,11 @@ main() {
 
     for i in "${streams[@]}"
     do
-        bashio::log.info $i
+        bashio::log.info "---"
+        # bashio::log.info $i
+        bashio::log.info $i | jq '.endpoint'
+        bashio::log.info ""
+        bashio::log.info "****"
     done
 
     # $(sh ./create_ffmpeg_cmd.sh "rtsp://192.168.10.74:554/h264" help) &

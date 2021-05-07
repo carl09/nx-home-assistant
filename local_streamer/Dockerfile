@@ -1,18 +1,9 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base-python/amd64:6.0.0
-# hadolint ignore=DL3006
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:9.2.0
 FROM ${BUILD_FROM}
-# ARG BUILD_FROM
-# FROM $BUILD_FROM
-
-# ENV LANG C.UTF-8
 
 # Install nginx and ffmpeg
 RUN apk add --update nginx ffmpeg && rm -rf /var/cache/apk/* && mkdir /tmp/stream
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
-
-# COPY run.sh /
-# RUN chmod a+x /run.sh
-# CMD [ "/startup.sh" ]
 
 COPY startup.sh /
 COPY startup.py /

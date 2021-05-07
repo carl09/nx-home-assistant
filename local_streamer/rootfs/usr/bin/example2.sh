@@ -12,6 +12,7 @@ main() {
 
     bashio::log.info "Starting stream"
 
+    url=""
     endpoint=""
 
     for i in ${streams};
@@ -19,10 +20,11 @@ main() {
         bashio::log.info "---"
         # bashio::log.info $i
         # bashio::log.info $i | jq '.endpoint'
-        bashio::log.info "$i" | jq '.url'
-        bashio::log.info "++"
+        # bashio::log.info "$i" | jq '.url'
+        # bashio::log.info "++"
 
-        endpoint="$i" | jq '.endpoint'
+        endpoint=$(jq -r '.endpoint' <<< $i)
+        url=$(jq -r '.url' <<< $i)
         bashio::log.info $endpoint
         bashio::log.info ""
 

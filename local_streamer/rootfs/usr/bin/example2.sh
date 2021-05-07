@@ -12,7 +12,7 @@ main() {
 
     bashio::log.info "Starting stream"
 
-    for i in "${streams[@]}"
+    for i in $(echo "${streams}" | jq -r '.[]');
     do
         bashio::log.info "---"
         # bashio::log.info $i

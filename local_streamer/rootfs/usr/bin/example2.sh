@@ -10,7 +10,7 @@ main() {
     streams=$(bashio::config 'streams')
     bashio::log.info "Seconds between each quotes is set to: ${streams}"
 
-    bashio::log.info "Starting ${OUT} stream"
+    bashio::log.info "Starting stream"
 
     for i in streams
     do

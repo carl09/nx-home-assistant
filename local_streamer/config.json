@@ -1,12 +1,16 @@
 {
   "name": "streamer",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "slug": "streamer",
   "description": "working on streamer",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "boot": "auto",
   "options": {},
-  "schema": {},
+  "schema": {
+    "streams": [
+      { "url": "str", "port": "int" }
+    ]
+  },
   "ports": {
     "80/tcp": 8090
   },

@@ -21,6 +21,7 @@
 #     fi
 #     COUNTER=$((COUNTER+1))
 # done
+echo "PARAMETERS ${PARAMETERS}"
 
 echo "Starting ${OUT} stream"
 $(sh ./create_ffmpeg_cmd.sh "rtsp://192.168.10.74:554/h264" help) &

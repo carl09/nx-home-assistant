@@ -22,7 +22,7 @@ main() {
         bashio::log.info "$i" | jq '.url'
         bashio::log.info "++"
 
-        endpoint="$i" | jq -r '.[0]'
+        endpoint="$i" | jq '.endpoint'
         bashio::log.info $endpoint
         bashio::log.info ""
 

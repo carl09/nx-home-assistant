@@ -19,6 +19,7 @@ COPY startup.py /
 COPY create_ffmpeg_cmd.sh /
 
 RUN chmod a+x /startup.sh
+RUN chmod a+x /startup.py
 RUN chmod a+x /create_ffmpeg_cmd.sh
 
-CMD [ "/startup.py" ]
+CMD [ "/startup.sh" ]

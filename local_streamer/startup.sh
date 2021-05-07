@@ -21,10 +21,15 @@
 #     fi
 #     COUNTER=$((COUNTER+1))
 # done
-echo "PARAMETERS ${PARAMETERS}"
+bashio: : log.trace "Hello"
 
-echo "Starting ${OUT} stream"
+streams =$(bashio: : config 'streams')
+bashio:: log.info "Seconds between each quotes is set to: ${streams}"
+
+bashio: : log.trace "Starting ${OUT} stream"
+
 $(sh ./create_ffmpeg_cmd.sh "rtsp://192.168.10.74:554/h264" help) &
+
 
 # ffmpeg -rtsp_transport tcp -i rtsp://192.168.10.74:554/h264 -f lavfi -i aevalsrc=0 -acodec aac -vcodec copy -hls_list_size 2 -hls_init_time 1 -hls_time 1 -hls_flags delete_segments /tmp/stream/help.m3u8
 

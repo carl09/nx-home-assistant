@@ -1,15 +1,20 @@
 {
   "name": "streamer",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "slug": "streamer",
   "description": "working on streamer",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "boot": "auto",
-  "options": {},
-  "schema": {
+  "options": {
     "streams": [
-      { "url": "str", "port": "int" }
+      {
+        "url": "rtsp://192.168.10.74:554/h264",
+        "endpoint": "help"
+      }
     ]
+  },
+  "schema": {
+    "streams": [{ "url": "str", "endpoint": "str" }]
   },
   "ports": {
     "80/tcp": 8090

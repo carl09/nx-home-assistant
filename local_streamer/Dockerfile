@@ -16,5 +16,6 @@ RUN chmod a+x /run.sh
 RUN chmod a+x /create_ffmpeg_cmd.sh
 
 RUN chmod a+x /etc/fix-attrs.d/scripts
+RUN chmod a+x /urs/bin/example2.sh
 
 # CMD [ "/run.sh" ]

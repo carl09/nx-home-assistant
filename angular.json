@@ -353,6 +353,5 @@
     "@nrwl/angular:library": {
       "unitTestRunner": "jest"
     }
-  },
-  "defaultProject": "web-admin"
+  }
 }

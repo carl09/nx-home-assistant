@@ -20,7 +20,6 @@
             "main": "apps/web-admin/src/main.ts",
             "polyfills": "apps/web-admin/src/polyfills.ts",
             "tsConfig": "apps/web-admin/tsconfig.app.json",
-            "aot": true,
             "assets": [
               {
                 "glob": "**/*",
@@ -42,7 +41,13 @@
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "apps/web-admin/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -73,7 +78,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

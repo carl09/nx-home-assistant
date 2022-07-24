@@ -1,6 +1,189 @@
 {
   "version": 1,
   "projects": {
+    "common": {
+      "root": "libs/common",
+      "sourceRoot": "libs/common/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/common/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "data-access": {
+      "root": "libs/data-access",
+      "sourceRoot": "libs/data-access/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/data-access/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "functions": {
+      "root": "apps/functions",
+      "sourceRoot": "apps/functions/src",
+      "projectType": "application",
+      "prefix": "functions",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:webpack",
+          "options": {
+            "outputPath": "dist/apps/functions",
+            "main": "apps/functions/src/main.ts",
+            "tsConfig": "apps/functions/tsconfig.app.json",
+            "assets": ["apps/functions/src/assets"],
+            "buildLibsFromSource": true
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/functions/src/environments/environment.ts",
+                  "with": "apps/functions/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:node",
+          "options": {
+            "buildTarget": "functions:build"
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/functions/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "google-agent": {
+      "root": "apps/google-agent",
+      "sourceRoot": "apps/google-agent/src",
+      "projectType": "application",
+      "prefix": "google-agent",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:webpack",
+          "options": {
+            "outputPath": "dist/apps/google-agent",
+            "main": "apps/google-agent/src/main.ts",
+            "tsConfig": "apps/google-agent/tsconfig.app.json",
+            "assets": [
+              "apps/google-agent/src/assets",
+              "apps/google-agent/src/index.html"
+            ],
+            "externalDependencies": "none",
+            "buildLibsFromSource": true
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/google-agent/src/environments/environment.ts",
+                  "with": "apps/google-agent/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:node",
+          "options": {
+            "buildTarget": "google-agent:build"
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/google-agent/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "google-local": {
+      "root": "apps/google-local",
+      "sourceRoot": "apps/google-local/src",
+      "projectType": "application",
+      "prefix": "google-local",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:webpack",
+          "options": {
+            "outputPath": "dist/apps/google-local",
+            "main": "apps/google-local/src/main.ts",
+            "tsConfig": "apps/google-local/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "apps/google-local/src/assets/",
+                "output": "./assets/"
+              }
+            ],
+            "buildLibsFromSource": true
+          },
+          "configurations": {
+            "production": {
+              "outputPath": "local_google/www/apps/google-local",
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/google-local/src/environments/environment.ts",
+                  "with": "apps/google-local/src/environments/environment.prod.ts"
+                }
+              ],
+              "assets": []
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:node",
+          "options": {
+            "buildTarget": "google-local:build",
+            "inspect": true
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/google-local/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
     "web-admin": {
       "projectType": "application",
       "schematics": {
@@ -105,198 +288,8 @@
             "passWithNoTests": true
           }
         }
-      }
-    },
-    "google-local": {
-      "root": "apps/google-local",
-      "sourceRoot": "apps/google-local/src",
-      "projectType": "application",
-      "prefix": "google-local",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "options": {
-            "outputPath": "dist/apps/google-local",
-            "main": "apps/google-local/src/main.ts",
-            "tsConfig": "apps/google-local/tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "apps/google-local/src/assets/",
-                "output": "./assets/"
-              }
-            ],
-            "buildLibsFromSource": true
-          },
-          "configurations": {
-            "production": {
-              "outputPath": "local_google/www/apps/google-local",
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/google-local/src/environments/environment.ts",
-                  "with": "apps/google-local/src/environments/environment.prod.ts"
-                }
-              ],
-              "assets": []
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "google-local:build",
-            "inspect": true
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/google-local/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "functions": {
-      "root": "apps/functions",
-      "sourceRoot": "apps/functions/src",
-      "projectType": "application",
-      "prefix": "functions",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "options": {
-            "outputPath": "dist/apps/functions",
-            "main": "apps/functions/src/main.ts",
-            "tsConfig": "apps/functions/tsconfig.app.json",
-            "assets": ["apps/functions/src/assets"],
-            "buildLibsFromSource": true
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/functions/src/environments/environment.ts",
-                  "with": "apps/functions/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "functions:build"
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/functions/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "google-agent": {
-      "root": "apps/google-agent",
-      "sourceRoot": "apps/google-agent/src",
-      "projectType": "application",
-      "prefix": "google-agent",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "options": {
-            "outputPath": "dist/apps/google-agent",
-            "main": "apps/google-agent/src/main.ts",
-            "tsConfig": "apps/google-agent/tsconfig.app.json",
-            "assets": [
-              "apps/google-agent/src/assets",
-              "apps/google-agent/src/index.html"
-            ],
-            "externalDependencies": "none",
-            "buildLibsFromSource": true
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/google-agent/src/environments/environment.ts",
-                  "with": "apps/google-agent/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "google-agent:build"
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/google-agent/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "common": {
-      "root": "libs/common",
-      "sourceRoot": "libs/common/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/common/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "data-access": {
-      "root": "libs/data-access",
-      "sourceRoot": "libs/data-access/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/data-access/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular",
-    "analytics": "b9880151-c4a4-4fcd-be1e-1d24d75b0ee0"
-  },
-  "schematics": {
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
+      },
+      "tags": []
     }
   }
 }

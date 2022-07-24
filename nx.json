@@ -7,35 +7,42 @@
     "nx.json": "*",
     "tsconfig.base.json": "*"
   },
-  "projects": {
-    "web-admin": {
-      "tags": []
-    },
-    "google-local": {
-      "tags": []
-    },
-    "functions": {
-      "tags": []
-    },
-    "google-agent": {
-      "tags": []
-    },
-    "common": {
-      "tags": []
-    },
-    "data-access": {
-      "tags": []
-    }
-  },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
+        "parallel": 1
       }
     }
   },
   "affected": {
     "defaultBase": "master"
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular",
+    "analytics": "b9880151-c4a4-4fcd-be1e-1d24d75b0ee0"
+  },
+  "generators": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
   }
 }

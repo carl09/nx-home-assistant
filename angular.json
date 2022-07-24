@@ -60,7 +60,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -97,16 +96,6 @@
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "web-admin:build"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/web-admin/tsconfig.app.json",
-              "apps/web-admin/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!apps/web-admin/**"]
           }
         },
         "test": {
@@ -163,16 +152,6 @@
             "inspect": true
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/google-local/tsconfig.app.json",
-              "apps/google-local/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!apps/google-local/**"]
-          }
-        },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
@@ -216,16 +195,6 @@
           "builder": "@nrwl/node:execute",
           "options": {
             "buildTarget": "functions:build"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/functions/tsconfig.app.json",
-              "apps/functions/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!apps/functions/**"]
           }
         },
         "test": {
@@ -277,16 +246,6 @@
             "buildTarget": "google-agent:build"
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/google-agent/tsconfig.app.json",
-              "apps/google-agent/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!apps/google-agent/**"]
-          }
-        },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
@@ -302,16 +261,6 @@
       "projectType": "library",
       "schematics": {},
       "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/common/tsconfig.lib.json",
-              "libs/common/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/common/**"]
-          }
-        },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
@@ -327,16 +276,6 @@
       "projectType": "library",
       "schematics": {},
       "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/data-access/tsconfig.lib.json",
-              "libs/data-access/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/data-access/**"]
-          }
-        },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {

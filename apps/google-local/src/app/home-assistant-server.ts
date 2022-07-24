@@ -35,7 +35,7 @@ export class HomeAssistantWebSocket {
       url: this.url,
       closeObserver: {
         next: (err) =>  {
-          log.error('Home Assistant Web Socket Closed', err);
+          log.error('Home Assistant Web Socket Closed', Object.keys(err));
             setTimeout(() => {
               log.debug('Re connecting');
               this.initWebSocket();

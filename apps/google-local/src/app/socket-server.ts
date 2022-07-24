@@ -61,7 +61,7 @@ export const createWebSocket = (
         ids.map(x => x.entityId).includes(update.entity_id)
       ),
       catchError((err, caught) => {
-        log.error('Device Filter Error', err);
+        log.error('Device Filter Error', Object.keys(err));
         // throw new Error(`Error in filter: ${err}`);
         return caught;
       })
@@ -86,7 +86,7 @@ export const createWebSocket = (
         }
       },
       err => {
-        log.error('Device Update Error', err);
+        log.error('Device Update Error', Object.keys(err));
       }
     );
 
@@ -203,7 +203,7 @@ export const createWebSocket = (
     };
 
     ws.onerror = err => {
-      log.error('createWebSocket onerror', err);
+      log.error('createWebSocket onerror', Object.keys(err));
     };
   });
 };

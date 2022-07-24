@@ -11,7 +11,7 @@ ENV LANG C.UTF-8
 
 ADD www/ /www/
 
-RUN apk add nodejs-npm
+RUN apk add nodejs npm
 
 # Copy data for add-on
 COPY run.sh /

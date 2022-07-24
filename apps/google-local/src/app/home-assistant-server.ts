@@ -50,7 +50,9 @@ export class HomeAssistantWebSocket {
           this.processMessage(msg);
         },
         err => {
-          log.error('ws error', err.message);
+          // log.error('ws error', err.message);
+
+          log.error('ws error', Object.keys(err));
           this.webSocketSubject.complete();
         },
         () => {

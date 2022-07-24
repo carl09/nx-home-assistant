@@ -4,15 +4,12 @@
   "license": "MIT",
   "private": true,
   "main": "dist/apps/functions/main.js",
-  "engines": {
-    "node": "10"
-  },
   "scripts": {
     "ng": "ng",
     "nx": "nx",
     "_start": "ng serve",
     "start": "nx run-many --target=serve --projects=web-admin,google-local --parallel --maxParallel=2",
-    "build": "ng build --configuration production --output-hashing none && ng build google-local --configuration production --source-map false",
+    "build": "ng build web-admin --configuration production --output-hashing none && ng build google-local --configuration production --source-map false",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
     "affected:apps": "nx affected:apps",

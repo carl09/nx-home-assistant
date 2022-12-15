@@ -53,7 +53,7 @@
     "actions-on-google": "^2.13.0",
     "cbor": "^7.0.5",
     "core-js": "^2.6.12",
-    "express": "4.17.2",
+    "express": "4.17.3",
     "firebase": "^8.4.2",
     "firebase-admin": "^9.6.0",
     "firebase-functions": "^3.13.2",
